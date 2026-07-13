@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  ::selection { background: #111110; color: #f1f1e7; }
+  @keyframes gs-marq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes gs-marq-rev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  @keyframes gs-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+</style>
+</helmet>
+
+<div ref="{{ setRoot }}" style="position:relative; background:radial-gradient(135% 95% at 50% -12%, #f6f6ee 0%, #f1f1e7 44%, #eaeadd 100%); color:#111110; font-family:'Archivo', system-ui, sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; min-height:100vh;">
+
+  <div style="position:fixed; inset:0; z-index:45; pointer-events:none; opacity:0.42; mix-blend-mode:soft-light; background-image:url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22160%22%20height=%22160%22%3E%3Cfilter%20id=%22n%22%3E%3CfeTurbulence%20type=%22fractalNoise%22%20baseFrequency=%220.9%22%20numOctaves=%222%22%20stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect%20width=%22100%25%22%20height=%22100%25%22%20filter=%22url(%23n)%22/%3E%3C/svg%3E');"></div>
+
+  <nav ref="{{ setNav }}" style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px clamp(20px,5vw,48px); border-bottom:1px solid rgba(17,17,16,0); background:rgba(241,241,231,0); backdrop-filter:saturate(140%) blur(10px); -webkit-backdrop-filter:saturate(140%) blur(10px); transition:background .4s ease, border-color .4s ease;">
+    <a href="#top" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:#111110;">
+      <img src="assets/logo-green.png" alt="Growth Social" style="height:27px; width:auto; display:block;" />
+      <span style="font-weight:700; font-size:17px; letter-spacing:-0.02em;">Growth Social</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:24px;">
+      <div style="display:flex; gap:30px;">
+        <a href="#services" style="text-decoration:none; color:rgba(17,17,16,0.66); font-size:14.5px; font-weight:500; transition:color .25s ease;" style-hover="color:#143828;">Services</a>
+        <a href="#results" style="text-decoration:none; color:rgba(17,17,16,0.66); font-size:14.5px; font-weight:500; transition:color .25s ease;" style-hover="color:#143828;">Results</a>
+        <a href="#approach" style="text-decoration:none; color:rgba(17,17,16,0.66); font-size:14.5px; font-weight:500; transition:color .25s ease;" style-hover="color:#143828;">Approach</a>
+        <a href="#voices" style="text-decoration:none; color:rgba(17,17,16,0.66); font-size:14.5px; font-weight:500; transition:color .25s ease;" style-hover="color:#143828;">Clients</a>
+      </div>
+      <span style="width:1px; height:18px; background:rgba(17,17,16,0.16);"></span>
+      <a href="Creator%20Academy.dc.html" style="text-decoration:none; color:rgba(17,17,16,0.55); font-size:14.5px; font-weight:500; transition:color .25s ease;" style-hover="color:#143828;">Creator login</a>
+      <a href="#book" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; background:#143828; color:#f1f1e7; font-weight:600; font-size:14.5px; padding:11px 20px; border-radius:999px; transition:transform .3s ease, background .3s ease, box-shadow .3s ease;" style-hover="transform:translateY(-2px); background:#0f2c1f; box-shadow:0 12px 24px -12px rgba(20,56,40,0.7);">Book a call</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="top" style="padding:clamp(130px,17vh,190px) 0 clamp(48px,7vw,80px);">
+    <div style="max-width:1240px; margin:0 auto; padding:0 clamp(20px,5vw,48px); width:100%;">
+      <div data-reveal style="opacity:1; display:flex; align-items:center; gap:14px; margin-bottom:clamp(26px,4vw,44px);">
+        <span style="font-family:'Space Mono', monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.5);">UGC Agency</span>
+        <span style="height:1px; width:44px; background:rgba(17,17,16,0.28);"></span>
+        <span style="font-family:'Space Mono', monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.5);">Est. 2026</span>
+      </div>
+
+      <h1 style="margin:0; font-weight:800; font-size:clamp(48px,9.2vw,132px); line-height:0.92; letter-spacing:-0.035em; max-width:14ch;">
+        <span data-reveal style="display:block; opacity:1;">Creator‑focused.</span>
+        <span data-reveal data-delay="90" style="display:block; opacity:1; font-family:'Newsreader', Georgia, serif; font-style:italic; font-weight:500; letter-spacing:-0.01em;">Outcome‑obsessed.</span>
+        <span data-reveal data-delay="180" style="display:block; opacity:1;">Against the grain.</span>
+      </h1>
+
+      <div style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:32px; margin-top:clamp(32px,5vw,56px);">
+        <p data-reveal data-delay="240" style="opacity:1; margin:0; max-width:46ch; font-size:clamp(17px,1.5vw,21px); line-height:1.55; color:rgba(17,17,16,0.68);">Growth Social is a UGC agency built around the people who make the content — and the results our clients actually care about. We coach creators like a team and measure ourselves on your numbers.</p>
+        <div data-reveal data-delay="300" style="opacity:1; display:flex; align-items:center; gap:20px;">
+          <a href="#book" style="text-decoration:none; display:inline-flex; align-items:center; gap:10px; background:#143828; color:#f1f1e7; font-weight:600; font-size:16px; padding:16px 26px; border-radius:999px; transition:transform .3s ease, background .3s ease, box-shadow .3s ease;" style-hover="transform:translateY(-2px); background:#0f2c1f; box-shadow:0 16px 30px -14px rgba(20,56,40,0.7);">Book a call <span style="font-family:'Space Mono',monospace;">→</span></a>
+          <a href="#services" style="text-decoration:none; color:#111110; font-weight:600; font-size:16px; border-bottom:1px solid rgba(17,17,16,0.3); padding-bottom:3px;">See the work</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- UGC reel marquee -->
+    <div style="margin-top:clamp(48px,7vw,88px); overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent); mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);">
+      <div data-marquee="clips" style="display:flex; gap:18px; width:max-content; padding:0 9px; animation:gs-marq 46s linear infinite;">
+        <sc-for list="{{ clipsLoop }}" as="clip" hint-placeholder-count="10">
+          <div style="flex:0 0 auto; width:clamp(150px,15vw,210px); aspect-ratio:9/16; border-radius:16px; overflow:hidden; position:relative; border:1px solid rgba(17,17,16,0.09); background:repeating-linear-gradient(135deg,#e8e8dc 0 11px,#eeeee4 11px 22px);">
+            <span style="position:absolute; top:12px; left:12px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.08em; color:rgba(17,17,16,0.55); background:rgba(241,241,231,0.7); padding:3px 7px; border-radius:6px;">{{ clip.id }}</span>
+            <span style="position:absolute; bottom:12px; left:12px; right:12px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.02em; color:rgba(17,17,16,0.62);">{{ clip.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </header>
+
+  <!-- SOCIAL PROOF -->
+  <sc-if value="{{ showBrandRow }}" hint-placeholder-val="{{ true }}">
+  <section style="padding:clamp(28px,4vw,44px) 0; border-top:1px solid rgba(17,17,16,0.1); border-bottom:1px solid rgba(17,17,16,0.1);">
+    <div style="max-width:1240px; margin:0 auto 22px; padding:0 clamp(20px,5vw,48px);">
+      <span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(17,17,16,0.45);">Trusted by brands of every size</span>
+    </div>
+    <div style="overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);">
+      <div data-marquee="brands" style="display:flex; gap:clamp(40px,5vw,72px); width:max-content; align-items:center; animation:gs-marq-rev 38s linear infinite;">
+        <sc-for list="{{ brandsLoop }}" as="brand" hint-placeholder-count="12">
+          <span style="font-weight:700; font-size:clamp(20px,2.4vw,30px); letter-spacing:-0.02em; color:rgba(17,17,16,0.34); white-space:nowrap;">{{ brand }}</span>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- RESULTS / STATS -->
+  <section id="results" style="position:relative; overflow:hidden; background:#143828; color:#f1f1e7; padding:clamp(72px,10vw,130px) 0;">
+    <div style="position:absolute; inset:0; pointer-events:none; background:radial-gradient(90% 70% at 12% 0%, rgba(241,241,231,0.09), transparent 55%);"></div>
+    <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="position:absolute; right:-4%; bottom:-16%; width:clamp(320px,38vw,560px); opacity:0.05; pointer-events:none;" />
+    <div style="position:relative; max-width:1240px; margin:0 auto; padding:0 clamp(20px,5vw,48px);">
+      <div data-reveal style="opacity:1; display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:clamp(44px,6vw,72px);">
+        <span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(241,241,231,0.5);">/ The receipts</span>
+        <h2 style="margin:0; font-weight:700; font-size:clamp(28px,4vw,52px); line-height:1.02; letter-spacing:-0.025em; max-width:18ch;">Content that earns its place in the ad account.</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1px; background:rgba(241,241,231,0.14); border:1px solid rgba(241,241,231,0.14); border-radius:16px; overflow:hidden;">
+        <sc-for list="{{ stats }}" as="stat" hint-placeholder-count="4">
+          <div data-reveal style="opacity:1; background:#111110; padding:clamp(28px,3.5vw,44px);">
+            <div style="font-weight:800; font-size:clamp(46px,6vw,84px); line-height:1; letter-spacing:-0.03em; display:flex; align-items:baseline;">
+              <span data-count="{{ stat.value }}">0</span><span style="font-size:0.5em; margin-left:2px;">{{ stat.suffix }}</span>
+            </div>
+            <p style="margin:16px 0 0; font-size:14.5px; line-height:1.5; color:rgba(241,241,231,0.6); max-width:22ch;">{{ stat.label }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" style="padding:clamp(72px,10vw,140px) 0;">
+    <div style="max-width:1240px; margin:0 auto; padding:0 clamp(20px,5vw,48px);">
+      <div data-reveal style="opacity:1; max-width:60ch; margin-bottom:clamp(44px,6vw,80px);">
+        <span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.45);">/ What we do</span>
+        <h2 style="margin:18px 0 0; font-weight:700; font-size:clamp(32px,5vw,60px); line-height:1.0; letter-spacing:-0.03em;">Three things, done <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">obsessively</span> well.</h2>
+      </div>
+      <div style="border-top:1px solid rgba(17,17,16,0.14);">
+        <sc-for list="{{ services }}" as="svc" hint-placeholder-count="3">
+          <div data-reveal data-svc style="opacity:1; display:grid; grid-template-columns:minmax(0,0.14fr) minmax(0,0.32fr) minmax(0,0.44fr) minmax(0,0.1fr); gap:clamp(16px,3vw,48px); align-items:start; padding:clamp(30px,4vw,52px) 0; border-bottom:1px solid rgba(17,17,16,0.14); border-radius:12px; cursor:pointer; transition:background .4s cubic-bezier(.16,1,.3,1), padding .4s cubic-bezier(.16,1,.3,1);" style-hover="background:rgba(20,56,40,0.05); padding-left:20px; padding-right:20px;">
+            <span style="font-family:'Space Mono',monospace; font-size:14px; color:rgba(17,17,16,0.4);">{{ svc.no }}</span>
+            <h3 style="margin:0; font-weight:700; font-size:clamp(24px,2.8vw,36px); letter-spacing:-0.02em; line-height:1.04;">{{ svc.title }}</h3>
+            <div>
+              <p style="margin:0 0 20px; font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:rgba(17,17,16,0.66);">{{ svc.desc }}</p>
+              <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                <sc-for list="{{ svc.tags }}" as="tag" hint-placeholder-count="3">
+                  <span style="font-family:'Space Mono',monospace; font-size:11.5px; letter-spacing:0.03em; color:rgba(17,17,16,0.6); border:1px solid rgba(17,17,16,0.16); padding:6px 11px; border-radius:999px;">{{ tag }}</span>
+                </sc-for>
+              </div>
+            </div>
+            <span style="justify-self:end; width:44px; height:44px; border-radius:50%; border:1px solid rgba(17,17,16,0.2); display:flex; align-items:center; justify-content:center; font-family:'Space Mono',monospace; font-size:18px; color:#143828;">↗</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATEMENT MARQUEE BAND -->
+  <div style="background:#143828; color:#f1f1e7; padding:clamp(20px,2.4vw,34px) 0; overflow:hidden; position:relative;">
+    <div style="position:absolute; inset:0; pointer-events:none; background:radial-gradient(80% 120% at 50% 50%, transparent 40%, rgba(0,0,0,0.18));"></div>
+    <div data-marquee="band" style="display:flex; align-items:center; gap:clamp(26px,3.4vw,54px); width:max-content; white-space:nowrap; animation:gs-marq 42s linear infinite; position:relative;">
+      <span style="font-weight:700; font-size:clamp(28px,3.8vw,56px); letter-spacing:-0.02em;">Creator‑first</span>
+      <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="height:0.62em; width:auto; opacity:0.65;" />
+      <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500; font-size:clamp(28px,3.8vw,56px);">Outcome‑driven</span>
+      <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="height:0.62em; width:auto; opacity:0.65;" />
+      <span style="font-weight:700; font-size:clamp(28px,3.8vw,56px); letter-spacing:-0.02em;">Coached like a team</span>
+      <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="height:0.62em; width:auto; opacity:0.65;" />
+      <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500; font-size:clamp(28px,3.8vw,56px);">Against the grain</span>
+      <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="height:0.62em; width:auto; opacity:0.65;" />
+      <span style="font-weight:700; font-size:clamp(28px,3.8vw,56px); letter-spacing:-0.02em;">Creator‑first</span>
+      <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="height:0.62em; width:auto; opacity:0.65;" />
+      <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500; font-size:clamp(28px,3.8vw,56px);">Outcome‑driven</span>
+      <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="height:0.62em; width:auto; opacity:0.65;" />
+      <span style="font-weight:700; font-size:clamp(28px,3.8vw,56px); letter-spacing:-0.02em;">Coached like a team</span>
+      <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="height:0.62em; width:auto; opacity:0.65;" />
+      <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500; font-size:clamp(28px,3.8vw,56px);">Against the grain</span>
+      <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="height:0.62em; width:auto; opacity:0.65;" />
+    </div>
+  </div>
+
+  <!-- APPROACH / ABOUT -->
+  <section id="approach" style="padding:clamp(72px,10vw,140px) 0; background:#ececde;">
+    <div style="max-width:1240px; margin:0 auto; padding:0 clamp(20px,5vw,48px);">
+      <div data-reveal style="opacity:1; max-width:none; margin-bottom:clamp(48px,6vw,84px);">
+        <span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.45);">/ Why we exist</span>
+        <p style="margin:20px 0 0; font-weight:700; font-size:clamp(30px,4.6vw,60px); line-height:1.06; letter-spacing:-0.03em; max-width:30ch;">Traditional agencies optimize for output. <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">We optimize for you.</span></p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:clamp(28px,3vw,48px);">
+        <sc-for list="{{ principles }}" as="p" hint-placeholder-count="3">
+          <div data-reveal style="opacity:1; border-top:1px solid rgba(17,17,16,0.2); padding-top:22px;">
+            <span style="font-family:'Space Mono',monospace; font-size:13px; color:rgba(17,17,16,0.4);">{{ p.no }}</span>
+            <h3 style="margin:14px 0 12px; font-weight:700; font-size:clamp(21px,2.2vw,27px); letter-spacing:-0.02em;">{{ p.title }}</h3>
+            <p style="margin:0; font-size:15.5px; line-height:1.6; color:rgba(17,17,16,0.66);">{{ p.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="voices" style="padding:clamp(72px,10vw,140px) 0;">
+    <div style="max-width:1240px; margin:0 auto; padding:0 clamp(20px,5vw,48px);">
+      <div data-reveal style="opacity:1; margin-bottom:clamp(44px,6vw,72px);">
+        <span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.45);">/ In their words</span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(20px,2.5vw,32px);">
+        <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="3">
+          <figure data-reveal style="opacity:1; margin:0; background:#fbfbf5; border:1px solid rgba(17,17,16,0.1); border-radius:18px; padding:clamp(26px,3vw,38px); display:flex; flex-direction:column; justify-content:space-between; min-height:280px; transition:transform .4s cubic-bezier(.16,1,.3,1), border-color .4s ease, box-shadow .4s ease;" style-hover="transform:translateY(-6px); border-color:rgba(20,56,40,0.4); box-shadow:0 22px 44px -24px rgba(20,56,40,0.4);">
+            <blockquote style="margin:0; font-family:'Newsreader',Georgia,serif; font-size:clamp(20px,1.9vw,26px); line-height:1.32; letter-spacing:-0.01em; color:#111110;">“{{ t.quote }}”</blockquote>
+            <figcaption style="margin-top:28px; display:flex; align-items:center; gap:12px;">
+              <span style="width:40px; height:40px; border-radius:50%; background:repeating-linear-gradient(135deg,#e6e6da 0 6px,#efefe6 6px 12px); border:1px solid rgba(17,17,16,0.1); flex:0 0 auto;"></span>
+              <div>
+                <div style="font-weight:600; font-size:15px;">{{ t.name }}</div>
+                <div style="font-family:'Space Mono',monospace; font-size:12px; color:rgba(17,17,16,0.5); margin-top:2px;">{{ t.role }}</div>
+              </div>
+            </figcaption>
+          </figure>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="book" style="position:relative; overflow:hidden; background:#143828; color:#f1f1e7; padding:clamp(80px,12vw,160px) 0;">
+    <div style="position:absolute; inset:0; pointer-events:none; background:radial-gradient(70% 80% at 50% 0%, rgba(241,241,231,0.10), transparent 60%);"></div>
+    <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:clamp(340px,42vw,620px); opacity:0.045; pointer-events:none;" />
+    <div style="position:relative; max-width:1240px; margin:0 auto; padding:0 clamp(20px,5vw,48px); text-align:center;">
+      <span data-reveal style="opacity:1; display:inline-block; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(241,241,231,0.5); margin-bottom:26px;">/ Let's talk</span>
+      <h2 data-reveal data-delay="80" style="opacity:1; margin:0 auto; max-width:16ch; font-weight:800; font-size:clamp(40px,7vw,96px); line-height:0.96; letter-spacing:-0.035em;">Content that <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">performs.</span></h2>
+      <div data-reveal data-delay="160" style="opacity:1; margin-top:clamp(36px,5vw,52px); display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:18px;">
+        <a href="#book" style="text-decoration:none; display:inline-flex; align-items:center; gap:10px; background:#f1f1e7; color:#111110; font-weight:600; font-size:17px; padding:18px 32px; border-radius:999px; transition:transform .3s ease, box-shadow .3s ease;" style-hover="transform:translateY(-2px); box-shadow:0 16px 34px -14px rgba(0,0,0,0.5);">Book a call <span style="font-family:'Space Mono',monospace;">→</span></a>
+        <a href="mailto:hello@growthsocial.co" style="text-decoration:none; color:rgba(241,241,231,0.85); font-family:'Space Mono',monospace; font-size:15px; border-bottom:1px solid rgba(241,241,231,0.3); padding-bottom:3px;">hello@growthsocial.co</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="padding:clamp(48px,6vw,72px) 0 40px;">
+    <div style="max-width:1240px; margin:0 auto; padding:0 clamp(20px,5vw,48px);">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:28px; align-items:flex-start; padding-bottom:36px; border-bottom:1px solid rgba(17,17,16,0.12);">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <img src="assets/logo-green.png" alt="Growth Social" style="height:28px; width:auto; display:block;" />
+          <span style="font-weight:700; font-size:18px; letter-spacing:-0.02em;">Growth Social</span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:30px;">
+          <a href="#services" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:14px; font-weight:500;">Services</a>
+          <a href="#results" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:14px; font-weight:500;">Results</a>
+          <a href="#approach" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:14px; font-weight:500;">Approach</a>
+          <a href="#voices" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:14px; font-weight:500;">Clients</a>
+          <a href="#book" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:14px; font-weight:500;">Book a call</a>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; margin-top:24px;">
+        <span style="font-family:'Space Mono',monospace; font-size:12px; color:rgba(17,17,16,0.42);">© 2026 Growth Social — UGC, done differently.</span>
+        <span style="font-family:'Space Mono',monospace; font-size:12px; color:rgba(17,17,16,0.42);">Creators first. Outcomes always.</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;reduceMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;marqueeSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:42,&quot;min&quot;:16,&quot;max&quot;:80,&quot;step&quot;:2,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;showBrandRow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const brands = ['Meta', 'Cluely', 'Lovable', 'SharkNinja', 'Based Bodyworks', 'Anker', 'Govee', 'Levoit', 'QVC', 'PacSun', 'Midjourney', 'Polymarket', 'BISSELL', 'Dave\u2019s Hot Chicken', 'Crocs'];
+    const clips = [
+      { id: 'REEL 01', label: '9:16 · skincare hook' },
+      { id: 'REEL 02', label: '9:16 · unboxing' },
+      { id: 'REEL 03', label: '9:16 · testimonial' },
+      { id: 'REEL 04', label: '9:16 · day-in-life' },
+      { id: 'REEL 05', label: '9:16 · demo' },
+      { id: 'REEL 06', label: '9:16 · founder story' },
+      { id: 'REEL 07', label: '9:16 · before/after' },
+      { id: 'REEL 08', label: '9:16 · street interview' },
+    ];
+    const stats = [
+      { value: '3.4', suffix: 'x', label: 'Average conversion lift across paid social' },
+      { value: '150', suffix: '+', label: 'Vetted creators in our coached network' },
+      { value: '12', suffix: 'M+', label: 'Monthly views driven for our clients' },
+      { value: '48', suffix: 'hr', label: 'Average concept-to-first-cut turnaround' },
+    ];
+    const services = [
+      { no: '01', title: 'UGC Creation', desc: 'Scroll-stopping, platform-native content made by creators who actually use your product — briefed against your funnel, not vanity metrics.', tags: ['Short-form video', 'Photo', 'Hooks & scripting'] },
+      { no: '02', title: 'Creator Coaching', desc: 'We develop our creators like athletes: performance reviews, shared hook libraries and tight iteration loops so every batch outperforms the last.', tags: ['Performance reviews', 'Hook libraries', 'Iteration loops'] },
+      { no: '03', title: 'Performance Scaling', desc: 'Winning concepts get systematized and scaled across placements and markets, with results feeding straight back into the next brief.', tags: ['Creative testing', 'Scaling frameworks', 'Reporting'] },
+    ];
+    const principles = [
+      { no: '01', title: 'Creators, not vendors', body: 'We pay well, coach hard and build long-term relationships. Better-treated creators simply make better-performing content.' },
+      { no: '02', title: 'Outcomes, not deliverables', body: 'We measure ourselves on your CAC, ROAS and retention — never a quota of clips that nobody watches.' },
+      { no: '03', title: 'Systems, not guesswork', body: 'Every winning hook feeds a library and a testing framework, so performance compounds instead of resetting each month.' },
+    ];
+    const testimonials = [
+      { quote: 'They treat our creative like a product — every batch is measurably better than the last. It changed how our whole team thinks about paid.', name: 'Maya Ellison', role: 'Head of Growth, Superbloom' },
+      { quote: 'Finally an agency that reports on revenue, not view counts. Growth Social feels like a real extension of our team.', name: 'Devon Carter', role: 'Founder, Northwind' },
+      { quote: 'The creators actually understand our product. The content sounds like our customers — and it converts like it too.', name: 'Priya Nair', role: 'VP Marketing, Aéra' },
+    ];
+    return {
+      setRoot: (el) => { this.rootEl = el; },
+      setNav: (el) => { this.navEl = el; },
+      showBrandRow: this.props.showBrandRow ?? true,
+      brandsLoop: brands.concat(brands),
+      clipsLoop: clips.concat(clips),
+      stats, services, principles, testimonials,
+    };
+  }
+
+  componentDidMount() {
+    const root = this.rootEl || document;
+    const reduce = this.props.reduceMotion ?? false;
+    const speed = this.props.marqueeSpeed ?? 42;
+
+    const reveals = root.querySelectorAll('[data-reveal]');
+    const counters = root.querySelectorAll('[data-count]');
+    const marquees = root.querySelectorAll('[data-marquee]');
+
+    // Marquee speed / reduced motion
+    marquees.forEach((m) => {
+      if (reduce) { m.style.animation = 'none'; m.style.transform = 'none'; }
+      else { m.style.animationDuration = (m.getAttribute('data-marquee') === 'brands' ? speed - 4 : speed + 4) + 's'; }
+    });
+
+    // Content is visible by default (base opacity:1). Reveal = a one-shot
+    // CSS keyframe applied on scroll, which survives React re-renders and can
+    // never leave content hidden.
+    if (!reduce && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const el = e.target;
+            const d = parseFloat(el.getAttribute('data-delay') || '0');
+            el.style.animation = 'gs-rise .85s cubic-bezier(.16,1,.3,1) ' + d + 'ms both';
+            io.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+      reveals.forEach((el) => io.observe(el));
+
+      const cio = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { this.animateCount(e.target); cio.unobserve(e.target); }
+        });
+      }, { threshold: 0.4 });
+      counters.forEach((el) => cio.observe(el));
+    } else {
+      counters.forEach((el) => { el.textContent = el.getAttribute('data-count'); });
+    }
+
+    // Fallback: guarantee stat numbers land even if IO/rAF never fire
+    // (throttled iframe, unusual scroll container, etc.).
+    if (!reduce) {
+      this._numFallback = setTimeout(() => {
+        counters.forEach((el) => { if (el.textContent === '0') el.textContent = el.getAttribute('data-count'); });
+      }, 4000);
+    }
+
+    const nav = this.navEl || root.querySelector('nav');
+    this.onScroll = () => {
+      if (!nav) return;
+      const y = window.scrollY || 0;
+      nav.style.background = y > 16 ? 'rgba(241,241,231,0.82)' : 'rgba(241,241,231,0)';
+      nav.style.borderBottomColor = y > 16 ? 'rgba(17,17,16,0.1)' : 'rgba(17,17,16,0)';
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+
+  componentWillUnmount() {
+    if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+    if (this._numFallback) clearTimeout(this._numFallback);
+  }
+
+  animateCount(el) {
+    const raw = el.getAttribute('data-count');
+    const target = parseFloat(raw);
+    const decimals = (raw.split('.')[1] || '').length;
+    const dur = 1600;
+    const start = performance.now();
+    let done = false;
+    const finalVal = target.toFixed(decimals);
+    const step = (now) => {
+      if (done) return;
+      const p = Math.min(1, (now - start) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target * e).toFixed(decimals);
+      if (p < 1) requestAnimationFrame(step);
+      else { done = true; el.textContent = finalVal; }
+    };
+    requestAnimationFrame(step);
+    // Backstop: guarantee the final value even if rAF is throttled/paused.
+    setTimeout(() => { if (!done) { done = true; el.textContent = finalVal; } }, dur + 400);
+  }
+}
+</script>
+</body>
+</html>

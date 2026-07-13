@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e4e4d8; }
+  ::selection { background: #111110; color: #f1f1e7; }
+  .gs-scroll::-webkit-scrollbar { display: none; }
+  @keyframes gs-marq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes gs-marq-rev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  @keyframes gs-rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh; width:100%; display:flex; justify-content:center; align-items:flex-start; padding:40px 16px; background:radial-gradient(120% 80% at 50% 0%, #efefe4 0%, #e0e0d3 100%);">
+  <x-import component-from-global-scope="IOSDevice" from="./frames/ios-frame.jsx" hint-size="402px,874px">
+
+    <div ref="{{ setRoot }}" style="background:#f1f1e7; color:#111110; font-family:'Archivo', system-ui, sans-serif; -webkit-font-smoothing:antialiased; min-height:100%;">
+
+      <!-- Top bar -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:60px 20px 14px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <img src="assets/logo-green.png" alt="Growth Social" style="height:24px; width:auto; display:block;" />
+          <span style="font-weight:700; font-size:16px; letter-spacing:-0.02em;">Growth Social</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <a href="Creator%20Academy.dc.html" style="text-decoration:none; color:rgba(17,17,16,0.6); font-weight:500; font-size:13px;">Log in</a>
+          <a href="#book" style="text-decoration:none; background:#143828; color:#f1f1e7; font-weight:600; font-size:13px; padding:9px 15px; border-radius:999px;">Book a call</a>
+        </div>
+      </div>
+
+      <!-- HERO -->
+      <section style="padding:16px 20px 8px;">
+        <div data-reveal style="opacity:1; display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.5);">UGC Agency</span>
+          <span style="height:1px; width:28px; background:rgba(17,17,16,0.28);"></span>
+          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.5);">Est. 2026</span>
+        </div>
+        <h1 style="margin:0; font-weight:800; font-size:41px; line-height:0.98; letter-spacing:-0.035em;">
+          <span data-reveal style="opacity:1; display:block;">Creator‑focused.</span>
+          <span data-reveal data-delay="80" style="opacity:1; display:block; font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">Outcome‑obsessed.</span>
+          <span data-reveal data-delay="160" style="opacity:1; display:block;">Against the grain.</span>
+        </h1>
+        <p data-reveal data-delay="220" style="opacity:1; margin:22px 0 0; font-size:16px; line-height:1.55; color:rgba(17,17,16,0.68);">A UGC agency built around the people who make the content — and the results our clients actually care about.</p>
+        <div data-reveal data-delay="280" style="opacity:1; margin-top:26px; display:flex; flex-direction:column; gap:12px;">
+          <a href="#book" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; background:#143828; color:#f1f1e7; font-weight:600; font-size:16px; padding:16px; border-radius:14px;">Book a call <span style="font-family:'Space Mono',monospace;">→</span></a>
+          <a href="#services" style="text-decoration:none; display:flex; align-items:center; justify-content:center; color:#111110; font-weight:600; font-size:15px; padding:14px; border:1px solid rgba(17,17,16,0.2); border-radius:14px;">See the work</a>
+        </div>
+      </section>
+
+      <!-- Reel marquee -->
+      <div class="gs-scroll" style="margin-top:24px; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);">
+        <div data-marquee="clips" style="display:flex; gap:12px; width:max-content; padding:0 8px; animation:gs-marq 40s linear infinite;">
+          <sc-for list="{{ clipsLoop }}" as="clip" hint-placeholder-count="10">
+            <div style="flex:0 0 auto; width:118px; aspect-ratio:9/16; border-radius:14px; overflow:hidden; position:relative; border:1px solid rgba(17,17,16,0.09); background:repeating-linear-gradient(135deg,#e8e8dc 0 10px,#eeeee4 10px 20px);">
+              <span style="position:absolute; top:9px; left:9px; font-family:'Space Mono',monospace; font-size:8.5px; letter-spacing:0.06em; color:rgba(17,17,16,0.55); background:rgba(241,241,231,0.7); padding:2px 5px; border-radius:5px;">{{ clip.id }}</span>
+              <span style="position:absolute; bottom:9px; left:9px; right:9px; font-family:'Space Mono',monospace; font-size:9px; color:rgba(17,17,16,0.6);">{{ clip.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- SOCIAL PROOF -->
+      <sc-if value="{{ showBrandRow }}" hint-placeholder-val="{{ true }}">
+      <section style="padding:26px 0; margin-top:20px; border-top:1px solid rgba(17,17,16,0.1); border-bottom:1px solid rgba(17,17,16,0.1);">
+        <div style="padding:0 20px 16px;">
+          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(17,17,16,0.45);">Trusted by brands of every size</span>
+        </div>
+        <div class="gs-scroll" style="overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);">
+          <div data-marquee="brands" style="display:flex; gap:36px; width:max-content; align-items:center; animation:gs-marq-rev 34s linear infinite;">
+            <sc-for list="{{ brandsLoop }}" as="brand" hint-placeholder-count="12">
+              <span style="font-weight:700; font-size:22px; letter-spacing:-0.02em; color:rgba(17,17,16,0.34); white-space:nowrap;">{{ brand }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+      </sc-if>
+
+      <!-- RESULTS / STATS -->
+      <section id="results" style="background:#143828; color:#f1f1e7; padding:44px 20px;">
+        <div data-reveal style="opacity:1; margin-bottom:30px;">
+          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(241,241,231,0.5);">/ The receipts</span>
+          <h2 style="margin:14px 0 0; font-weight:700; font-size:28px; line-height:1.05; letter-spacing:-0.025em;">Content that earns its place in the ad account.</h2>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(241,241,231,0.14); border:1px solid rgba(241,241,231,0.14); border-radius:14px; overflow:hidden;">
+          <sc-for list="{{ stats }}" as="stat" hint-placeholder-count="4">
+            <div style="background:#111110; padding:22px 18px;">
+              <div style="font-weight:800; font-size:44px; line-height:1; letter-spacing:-0.03em; display:flex; align-items:baseline;">
+                <span data-count="{{ stat.value }}">0</span><span style="font-size:0.5em; margin-left:1px;">{{ stat.suffix }}</span>
+              </div>
+              <p style="margin:12px 0 0; font-size:12.5px; line-height:1.45; color:rgba(241,241,231,0.6);">{{ stat.label }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- SERVICES -->
+      <section id="services" style="padding:48px 20px 40px;">
+        <div data-reveal style="opacity:1; margin-bottom:28px;">
+          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.45);">/ What we do</span>
+          <h2 style="margin:12px 0 0; font-weight:700; font-size:34px; line-height:1.0; letter-spacing:-0.03em;">Three things, done <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">obsessively</span> well.</h2>
+        </div>
+        <div style="border-top:1px solid rgba(17,17,16,0.14);">
+          <sc-for list="{{ services }}" as="svc" hint-placeholder-count="3">
+            <div data-reveal style="opacity:1; padding:26px 0; border-bottom:1px solid rgba(17,17,16,0.14);">
+              <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;">
+                <div style="display:flex; align-items:baseline; gap:12px;">
+                  <span style="font-family:'Space Mono',monospace; font-size:12px; color:rgba(17,17,16,0.4);">{{ svc.no }}</span>
+                  <h3 style="margin:0; font-weight:700; font-size:24px; letter-spacing:-0.02em; line-height:1.05;">{{ svc.title }}</h3>
+                </div>
+                <span style="font-family:'Space Mono',monospace; font-size:18px; color:#111110;">↗</span>
+              </div>
+              <p style="margin:14px 0 16px; font-size:14.5px; line-height:1.55; color:rgba(17,17,16,0.66);">{{ svc.desc }}</p>
+              <div style="display:flex; flex-wrap:wrap; gap:7px;">
+                <sc-for list="{{ svc.tags }}" as="tag" hint-placeholder-count="3">
+                  <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.02em; color:rgba(17,17,16,0.6); border:1px solid rgba(17,17,16,0.16); padding:5px 10px; border-radius:999px;">{{ tag }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- APPROACH -->
+      <section id="approach" style="padding:48px 20px; background:#ececde;">
+        <div data-reveal style="opacity:1; margin-bottom:32px;">
+          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.45);">/ Why we exist</span>
+          <p style="margin:14px 0 0; font-weight:700; font-size:30px; line-height:1.06; letter-spacing:-0.03em;">Traditional agencies optimize for output. <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">We optimize for you.</span></p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:26px;">
+          <sc-for list="{{ principles }}" as="p" hint-placeholder-count="3">
+            <div data-reveal style="opacity:1; border-top:1px solid rgba(17,17,16,0.2); padding-top:18px;">
+              <span style="font-family:'Space Mono',monospace; font-size:12px; color:rgba(17,17,16,0.4);">{{ p.no }}</span>
+              <h3 style="margin:10px 0 8px; font-weight:700; font-size:21px; letter-spacing:-0.02em;">{{ p.title }}</h3>
+              <p style="margin:0; font-size:14.5px; line-height:1.55; color:rgba(17,17,16,0.66);">{{ p.body }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS -->
+      <section id="voices" style="padding:48px 0;">
+        <div data-reveal style="opacity:1; padding:0 20px; margin-bottom:22px; display:flex; align-items:center; justify-content:space-between;">
+          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.45);">/ In their words</span>
+          <span style="font-family:'Space Mono',monospace; font-size:10.5px; color:rgba(17,17,16,0.35);">swipe →</span>
+        </div>
+        <div class="gs-scroll" style="display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding:0 20px 4px;">
+          <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="3">
+            <figure style="scroll-snap-align:start; flex:0 0 auto; width:290px; margin:0; background:#fbfbf5; border:1px solid rgba(17,17,16,0.1); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:space-between; min-height:250px;">
+              <blockquote style="margin:0; font-family:'Newsreader',Georgia,serif; font-size:21px; line-height:1.32; letter-spacing:-0.01em; color:#111110;">“{{ t.quote }}”</blockquote>
+              <figcaption style="margin-top:22px; display:flex; align-items:center; gap:11px;">
+                <span style="width:38px; height:38px; border-radius:50%; background:repeating-linear-gradient(135deg,#e6e6da 0 6px,#efefe6 6px 12px); border:1px solid rgba(17,17,16,0.1); flex:0 0 auto;"></span>
+                <div>
+                  <div style="font-weight:600; font-size:14px;">{{ t.name }}</div>
+                  <div style="font-family:'Space Mono',monospace; font-size:11px; color:rgba(17,17,16,0.5); margin-top:2px;">{{ t.role }}</div>
+                </div>
+              </figcaption>
+            </figure>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- FINAL CTA -->
+      <section id="book" style="background:#143828; color:#f1f1e7; padding:56px 20px;">
+        <div data-reveal style="opacity:1; text-align:center;">
+          <span style="display:inline-block; font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(241,241,231,0.5); margin-bottom:20px;">/ Let's talk</span>
+          <h2 style="margin:0; font-weight:800; font-size:46px; line-height:0.98; letter-spacing:-0.035em;">Content that <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">performs.</span></h2>
+          <div style="margin-top:30px; display:flex; flex-direction:column; gap:14px; align-items:center;">
+            <a href="#book" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:#f1f1e7; color:#111110; font-weight:600; font-size:16px; padding:16px; border-radius:14px;">Book a call <span style="font-family:'Space Mono',monospace;">→</span></a>
+            <a href="mailto:hello@growthsocial.co" style="text-decoration:none; color:rgba(241,241,231,0.85); font-family:'Space Mono',monospace; font-size:13px; border-bottom:1px solid rgba(241,241,231,0.3); padding-bottom:3px;">hello@growthsocial.co</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer style="padding:32px 20px 40px;">
+        <div style="display:flex; align-items:center; gap:9px; padding-bottom:20px; border-bottom:1px solid rgba(17,17,16,0.12);">
+          <img src="assets/logo-green.png" alt="Growth Social" style="height:24px; width:auto; display:block;" />
+          <span style="font-weight:700; font-size:16px; letter-spacing:-0.02em;">Growth Social</span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:18px 24px; margin-top:20px;">
+          <a href="#services" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:13.5px; font-weight:500;">Services</a>
+          <a href="#results" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:13.5px; font-weight:500;">Results</a>
+          <a href="#approach" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:13.5px; font-weight:500;">Approach</a>
+          <a href="#voices" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:13.5px; font-weight:500;">Clients</a>
+          <a href="Creator%20Academy.dc.html" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:13.5px; font-weight:500;">Creator login</a>
+        </div>
+        <div style="margin-top:24px; font-family:'Space Mono',monospace; font-size:11px; color:rgba(17,17,16,0.42); line-height:1.7;">
+          <div>© 2026 Growth Social</div>
+          <div>Creators first. Outcomes always.</div>
+        </div>
+      </footer>
+
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:940},&quot;reduceMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;marqueeSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:40,&quot;min&quot;:16,&quot;max&quot;:80,&quot;step&quot;:2,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;showBrandRow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const brands = ['Meta', 'Cluely', 'Lovable', 'SharkNinja', 'Based Bodyworks', 'Anker', 'Govee', 'Levoit', 'QVC', 'PacSun', 'Midjourney', 'Polymarket', 'BISSELL', 'Dave\u2019s Hot Chicken', 'Crocs'];
+    const clips = [
+      { id: 'REEL 01', label: 'skincare hook' },
+      { id: 'REEL 02', label: 'unboxing' },
+      { id: 'REEL 03', label: 'testimonial' },
+      { id: 'REEL 04', label: 'day-in-life' },
+      { id: 'REEL 05', label: 'demo' },
+      { id: 'REEL 06', label: 'founder story' },
+      { id: 'REEL 07', label: 'before/after' },
+      { id: 'REEL 08', label: 'street interview' },
+    ];
+    const stats = [
+      { value: '3.4', suffix: 'x', label: 'Avg. conversion lift on paid social' },
+      { value: '150', suffix: '+', label: 'Vetted creators in our network' },
+      { value: '12', suffix: 'M+', label: 'Monthly views driven for clients' },
+      { value: '48', suffix: 'hr', label: 'Avg. concept-to-first-cut' },
+    ];
+    const services = [
+      { no: '01', title: 'UGC Creation', desc: 'Scroll-stopping, platform-native content made by creators who actually use your product — briefed against your funnel, not vanity metrics.', tags: ['Short-form video', 'Photo', 'Scripting'] },
+      { no: '02', title: 'Creator Coaching', desc: 'We develop our creators like athletes: performance reviews, shared hook libraries and tight iteration loops so every batch beats the last.', tags: ['Reviews', 'Hook libraries', 'Iteration'] },
+      { no: '03', title: 'Performance Scaling', desc: 'Winning concepts get systematized and scaled across placements and markets, with results feeding straight back into the next brief.', tags: ['Creative testing', 'Scaling', 'Reporting'] },
+    ];
+    const principles = [
+      { no: '01', title: 'Creators, not vendors', body: 'We pay well, coach hard and build long-term relationships. Better-treated creators make better-performing content.' },
+      { no: '02', title: 'Outcomes, not deliverables', body: 'We measure ourselves on your CAC, ROAS and retention — never a quota of clips nobody watches.' },
+      { no: '03', title: 'Systems, not guesswork', body: 'Every winning hook feeds a library and a testing framework, so performance compounds over time.' },
+    ];
+    const testimonials = [
+      { quote: 'They treat our creative like a product — every batch is measurably better than the last.', name: 'Maya Ellison', role: 'Head of Growth, Superbloom' },
+      { quote: 'Finally an agency that reports on revenue, not view counts. A real extension of our team.', name: 'Devon Carter', role: 'Founder, Northwind' },
+      { quote: 'The creators actually understand our product. The content converts like our customers wrote it.', name: 'Priya Nair', role: 'VP Marketing, Aéra' },
+    ];
+    return {
+      setRoot: (el) => { this.rootEl = el; },
+      showBrandRow: this.props.showBrandRow ?? true,
+      brandsLoop: brands.concat(brands),
+      clipsLoop: clips.concat(clips),
+      stats, services, principles, testimonials,
+    };
+  }
+
+  componentDidMount() {
+    // Content lives inside an async-loaded <x-import IOSDevice>, so the
+    // [data-reveal]/[data-count] elements may not exist yet. Retry until they do.
+    let tries = 0;
+    this._setupTimer = setInterval(() => {
+      tries += 1;
+      const found = (this.rootEl || document).querySelectorAll('[data-count]').length;
+      if (found > 0 || tries > 60) {
+        clearInterval(this._setupTimer);
+        this._setupTimer = null;
+        this.setupMotion();
+      }
+    }, 100);
+  }
+
+  setupMotion() {
+    const root = this.rootEl || document;
+    const reduce = this.props.reduceMotion ?? false;
+    const speed = this.props.marqueeSpeed ?? 40;
+
+    const reveals = root.querySelectorAll('[data-reveal]');
+    const counters = root.querySelectorAll('[data-count]');
+    const marquees = root.querySelectorAll('[data-marquee]');
+
+    marquees.forEach((m) => {
+      if (reduce) { m.style.animation = 'none'; }
+      else { m.style.animationDuration = (m.getAttribute('data-marquee') === 'brands' ? speed - 4 : speed) + 's'; }
+    });
+
+    if (!reduce && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const el = e.target;
+            const d = parseFloat(el.getAttribute('data-delay') || '0');
+            el.style.animation = 'gs-rise .8s cubic-bezier(.16,1,.3,1) ' + d + 'ms both';
+            io.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -4% 0px' });
+      reveals.forEach((el) => io.observe(el));
+
+      const cio = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { this.animateCount(e.target); cio.unobserve(e.target); }
+        });
+      }, { threshold: 0.4 });
+      counters.forEach((el) => cio.observe(el));
+    } else {
+      counters.forEach((el) => { el.textContent = el.getAttribute('data-count'); });
+    }
+
+    // Fallback so stat numbers always land even if IO/rAF are throttled.
+    if (!reduce) {
+      this._numFallback = setTimeout(() => {
+        counters.forEach((el) => { if (el.textContent === '0') el.textContent = el.getAttribute('data-count'); });
+      }, 4000);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._numFallback) clearTimeout(this._numFallback);
+    if (this._setupTimer) clearInterval(this._setupTimer);
+  }
+
+  animateCount(el) {
+    const raw = el.getAttribute('data-count');
+    const target = parseFloat(raw);
+    const decimals = (raw.split('.')[1] || '').length;
+    const dur = 1500;
+    const start = performance.now();
+    let done = false;
+    const finalVal = target.toFixed(decimals);
+    const step = (now) => {
+      if (done) return;
+      const p = Math.min(1, (now - start) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target * e).toFixed(decimals);
+      if (p < 1) requestAnimationFrame(step);
+      else { done = true; el.textContent = finalVal; }
+    };
+    requestAnimationFrame(step);
+    setTimeout(() => { if (!done) { done = true; el.textContent = finalVal; } }, dur + 400);
+  }
+}
+</script>
+</body>
+</html>
