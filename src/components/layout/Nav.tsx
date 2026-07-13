@@ -18,8 +18,8 @@ export function Nav() {
 
   return (
     <nav
-      className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between px-[clamp(20px,5vw,48px)] py-4 backdrop-saturate-150 backdrop-blur-[10px] transition-colors duration-300 ${
-        scrolled ? "bg-cream/82 border-b border-ink/10" : "border-b border-transparent"
+      className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-ink/10 px-[clamp(20px,5vw,48px)] py-4 backdrop-saturate-150 backdrop-blur-[10px] transition-colors duration-300 ${
+        scrolled ? "bg-cream/82" : "bg-cream/0"
       }`}
     >
       <Link href="#top" className="flex items-center gap-2.5 text-ink no-underline">

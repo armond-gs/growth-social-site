@@ -4,10 +4,10 @@ import { join } from "path";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Growth Social — Creator-focused. Outcome-obsessed. Against the grain.";
+export const alt = "Growth Social — UGC, done differently.";
 
 export default function OpengraphImage() {
-  const logo = readFileSync(join(process.cwd(), "public/logo-green.png")).toString("base64");
+  const logo = readFileSync(join(process.cwd(), "public/logo-cream.png")).toString("base64");
 
   return new ImageResponse(
     (
@@ -17,36 +17,43 @@ export default function OpengraphImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
-          background: "#F1F1E7",
-          padding: "72px 80px",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#143828",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <img src={`data:image/png;base64,${logo}`} width={40} height={42} alt="" />
-          <span style={{ fontSize: 28, fontWeight: 700, color: "#111110" }}>Growth Social</span>
+        <span
+          style={{
+            fontFamily: "monospace",
+            fontSize: 20,
+            letterSpacing: 4,
+            textTransform: "uppercase",
+            color: "rgba(241,241,231,0.5)",
+            marginBottom: 28,
+          }}
+        >
+          UGC Agency — Est. 2026
+        </span>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <img src={`data:image/png;base64,${logo}`} width={64} height={68} alt="" />
+          <span style={{ fontSize: 60, fontWeight: 800, color: "#F1F1E7", letterSpacing: -1 }}>
+            Growth Social
+          </span>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <span
-            style={{
-              fontFamily: "monospace",
-              fontSize: 22,
-              letterSpacing: 4,
-              textTransform: "uppercase",
-              color: "rgba(17,17,16,0.5)",
-              marginBottom: 20,
-            }}
-          >
-            UGC Agency — Est. 2026
-          </span>
-          <div style={{ display: "flex", flexDirection: "column", fontSize: 76, fontWeight: 800, lineHeight: 1.02, letterSpacing: -2, color: "#111110" }}>
-            <span>Creator-focused.</span>
-            <span style={{ fontFamily: "serif", fontStyle: "italic", fontWeight: 500 }}>
-              Outcome-obsessed.
-            </span>
-          </div>
-        </div>
+        <span
+          style={{
+            fontFamily: "serif",
+            fontStyle: "italic",
+            fontWeight: 500,
+            fontSize: 34,
+            color: "rgba(241,241,231,0.85)",
+            marginTop: 28,
+          }}
+        >
+          UGC, done differently.
+        </span>
       </div>
     ),
     size,
