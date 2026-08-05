@@ -1,8 +1,9 @@
-import type { Lesson } from "@/lib/data/academy";
+import type { LessonRow } from "@/lib/academy/types";
+import { formatLessonDuration } from "@/lib/academy/types";
 
-export function LessonCard({ lesson }: { lesson: Lesson }) {
+export function LessonCard({ lesson }: { lesson: LessonRow }) {
   return (
-    <div className="w-[200px] flex-none snap-start cursor-pointer md:w-[248px] md:snap-align-none">
+    <div className="w-[200px] flex-none snap-start md:w-[248px] md:snap-align-none">
       <div className="relative aspect-video overflow-hidden rounded-xl border border-ink/10 bg-[repeating-linear-gradient(135deg,#e6e6da_0_12px,#eeeee4_12px_24px)]">
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="flex h-9.5 w-9.5 items-center justify-center rounded-full bg-green/92 md:h-11 md:w-11">
@@ -12,7 +13,7 @@ export function LessonCard({ lesson }: { lesson: Lesson }) {
           </span>
         </div>
         <span className="absolute right-2 bottom-2 rounded-md bg-ink/60 px-1.75 py-0.75 font-mono text-[9.5px] text-cream">
-          {lesson.dur}
+          {formatLessonDuration(lesson.durationSeconds)}
         </span>
         {lesson.done && (
           <span className="absolute top-2 left-2 rounded-md bg-success px-1.75 py-0.75 font-mono text-[8.5px] tracking-[0.06em] text-cream">

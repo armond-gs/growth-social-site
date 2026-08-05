@@ -3,17 +3,31 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MODULES, MODULE_COUNT, LESSON_COUNT, PROGRESS_PERCENT } from "@/lib/data/academy";
+import type { ModuleRow, ContinueWatching, CoachRow } from "@/lib/academy/types";
 import { AvatarPlaceholder } from "@/components/ui/AvatarPlaceholder";
 import { ContinueWatchingCard } from "@/components/academy/ContinueWatchingCard";
+import { CoachesSection } from "@/components/academy/CoachesSection";
 import { CurriculumModule } from "@/components/academy/CurriculumModule";
 import { createClient } from "@/lib/supabase/client";
 
-export function AcademyLibrary({ creatorEmail }: { creatorEmail: string }) {
+export function AcademyLibrary({
+  creatorEmail,
+  modules,
+  continueWatching,
+  progressPercent,
+  coaches,
+}: {
+  creatorEmail: string;
+  modules: ModuleRow[];
+  continueWatching: ContinueWatching | null;
+  progressPercent: number;
+  coaches: CoachRow[];
+}) {
   const router = useRouter();
   // No profiles table yet, so the display name is just derived from the
   // email — swap for a real display name once creator profiles exist.
   const displayName = creatorEmail.split("@")[0] || "creator";
+  const lessonCount = modules.reduce((sum, m) => sum + m.lessons.length, 0);
 
   const handleLogout = async () => {
     const supabase = createClient();
@@ -48,30 +62,32 @@ export function AcademyLibrary({ creatorEmail }: { creatorEmail: string }) {
       <div className="mx-auto max-w-[1200px] px-4.5 pt-5.5 pb-16 md:px-[clamp(20px,4vw,44px)] md:pt-[clamp(28px,4vw,48px)]">
         <div className="mb-6 md:mb-9">
           <span className="font-mono text-[11px] tracking-[0.14em] text-ink/45 uppercase md:text-xs md:tracking-[0.16em]">
-            Your progress · {PROGRESS_PERCENT}% complete
+            Your progress · {progressPercent}% complete
           </span>
           <h1 className="mt-2.5 mb-4 text-[30px] font-bold tracking-[-0.03em] md:mt-3 md:mb-0 md:text-[clamp(30px,4vw,46px)]">
             Welcome back, {displayName}.
           </h1>
           <div className="h-1.25 overflow-hidden rounded-full bg-ink/10 md:hidden">
-            <div className="h-full bg-green" style={{ width: `${PROGRESS_PERCENT}%` }} />
+            <div className="h-full bg-green" style={{ width: `${progressPercent}%` }} />
           </div>
         </div>
 
-        <ContinueWatchingCard />
+        {continueWatching && <ContinueWatchingCard data={continueWatching} />}
+
+        <CoachesSection coaches={coaches} />
 
         <div className="mb-1 flex items-baseline justify-between md:mb-7">
           <h2 className="m-0 text-xl font-bold tracking-[-0.02em] md:text-[22px]">Curriculum</h2>
-          <span className="font-mono text-[11px] text-ink/45 md:hidden">{MODULE_COUNT} modules</span>
+          <span className="font-mono text-[11px] text-ink/45 md:hidden">{modules.length} modules</span>
           <span className="hidden font-mono text-xs text-ink/45 md:inline">
-            {MODULE_COUNT} modules · {LESSON_COUNT} lessons
+            {modules.length} modules · {lessonCount} lessons
           </span>
         </div>
-        <div className="mb-7 font-mono text-[11px] text-ink/40 md:hidden">{LESSON_COUNT} lessons</div>
+        <div className="mb-7 font-mono text-[11px] text-ink/40 md:hidden">{lessonCount} lessons</div>
 
         <div className="flex flex-col gap-8.5 md:mt-4 md:gap-11">
-          {MODULES.map((mod) => (
-            <CurriculumModule key={mod.no} mod={mod} />
+          {modules.map((mod) => (
+            <CurriculumModule key={mod.id} mod={mod} />
           ))}
         </div>
       </div>
