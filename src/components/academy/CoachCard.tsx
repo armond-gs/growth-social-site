@@ -8,7 +8,8 @@ export function CoachCard({ coach, onOpen }: { coach: CoachRow; onOpen: () => vo
         type="button"
         onClick={onOpen}
         aria-label={`Play ${coach.name}'s intro`}
-        className="relative aspect-video w-full overflow-hidden rounded-xl border border-ink/10 bg-[repeating-linear-gradient(135deg,#e6e6da_0_14px,#eeeee4_14px_28px)] text-left md:rounded-[14px]"
+        className="relative aspect-video w-full overflow-hidden rounded-xl border border-ink/10 bg-[repeating-linear-gradient(135deg,#e6e6da_0_14px,#eeeee4_14px_28px)] bg-cover bg-center text-left md:rounded-[14px]"
+        style={{ backgroundImage: `url(${coach.thumbnailUrl})` }}
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="flex h-11 w-11 items-center justify-center rounded-full bg-ink/90 md:h-14 md:w-14">

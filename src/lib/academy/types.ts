@@ -10,6 +10,7 @@ export type LessonRow = {
   title: string;
   videoUid: string | null;
   durationSeconds: number | null;
+  thumbnailUrl: string | null;
   done: boolean;
 };
 
@@ -27,6 +28,7 @@ export type ContinueWatching = {
   progressPercent: number;
   videoUid: string | null;
   durationSeconds: number | null;
+  thumbnailUrl: string | null;
   // True when there's no real progress yet and this is just a "start here"
   // suggestion (the first lesson) rather than an actual resume point.
   isStart: boolean;
@@ -38,6 +40,7 @@ export type CoachRow = {
   role: string;
   videoUid: string;
   durationSeconds: number;
+  thumbnailUrl: string;
   watched: boolean;
 };
 

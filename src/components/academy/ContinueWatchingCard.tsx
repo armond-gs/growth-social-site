@@ -3,11 +3,14 @@ import type { ContinueWatching } from "@/lib/academy/types";
 import { formatLessonDuration } from "@/lib/academy/types";
 
 export function ContinueWatchingCard({ data }: { data: ContinueWatching }) {
-  const { moduleLabel, lessonTitle, progressPercent, durationSeconds, isStart } = data;
+  const { moduleLabel, lessonTitle, progressPercent, durationSeconds, thumbnailUrl, isStart } = data;
 
   return (
     <div className="mb-14 flex flex-col gap-5 rounded-[20px] bg-green p-3.5 text-cream md:mb-14 md:grid md:grid-cols-[1.4fr_1fr] md:items-center md:gap-[clamp(20px,3vw,40px)] md:p-[clamp(20px,2.5vw,32px)]">
-      <div className="relative aspect-video overflow-hidden rounded-xl bg-[repeating-linear-gradient(135deg,#16281f_0_14px,#1d3327_14px_28px)]">
+      <div
+        className="relative aspect-video overflow-hidden rounded-xl bg-[repeating-linear-gradient(135deg,#16281f_0_14px,#1d3327_14px_28px)] bg-cover bg-center"
+        style={thumbnailUrl ? { backgroundImage: `url(${thumbnailUrl})` } : undefined}
+      >
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="flex h-14 w-14 items-center justify-center rounded-full bg-cream/92 md:h-16 md:w-16">
             <svg width="18" height="20" viewBox="0 0 20 22" className="md:h-[22px] md:w-5">
