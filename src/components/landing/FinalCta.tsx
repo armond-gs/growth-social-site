@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CONTAINER } from "@/lib/layout";
 import { Reveal } from "@/components/ui/Reveal";
+import { BookCallButton, BookingReveal } from "@/components/booking/BookingReveal";
 
 export function FinalCta() {
   return (
@@ -37,12 +38,9 @@ export function FinalCta() {
           delay={160}
           className="mt-[30px] flex flex-col items-center gap-3.5 md:mt-[clamp(36px,5vw,52px)] md:flex-row md:flex-wrap md:justify-center md:gap-4.5"
         >
-          <Link
-            href="#book"
-            className="flex w-full items-center justify-center gap-2 rounded-[14px] bg-cream px-8 py-4 font-semibold text-ink no-underline transition-all duration-300 ease-out md:w-auto md:rounded-full md:px-8 md:py-[18px] md:text-[17px] md:hover:-translate-y-0.5 md:hover:shadow-[0_16px_34px_-14px_rgba(0,0,0,0.5)]"
-          >
+          <BookCallButton className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-[14px] bg-cream px-8 py-4 font-semibold text-ink no-underline transition-all duration-300 ease-out md:w-auto md:rounded-full md:px-8 md:py-[18px] md:text-[17px] md:hover:-translate-y-0.5 md:hover:shadow-[0_16px_34px_-14px_rgba(0,0,0,0.5)]">
             Book a call <span className="font-mono">→</span>
-          </Link>
+          </BookCallButton>
           <Link
             href="mailto:contact@growthsocialhq.com"
             className="border-b border-cream/30 pb-[3px] font-mono text-sm text-cream/85 no-underline"
@@ -50,6 +48,8 @@ export function FinalCta() {
             contact@growthsocialhq.com
           </Link>
         </Reveal>
+
+        <BookingReveal />
       </div>
     </section>
   );
