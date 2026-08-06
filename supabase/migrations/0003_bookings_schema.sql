@@ -1,22 +1,21 @@
 -- Native booking system: replaces linking out to a third-party scheduler.
 --
--- Safe to re-run pre-launch: drops and rebuilds the table. Stop re-running
--- this the moment a real prospect has booked a call.
+-- Non-destructive and safe to re-run — see the note at the top of
+-- 0001_academy_schema.sql. This one matters most: bookings holds real
+-- prospect enquiries, and an earlier revision opened with
+-- `drop table if exists bookings cascade`. Never add a drop here.
 
-drop table if exists bookings cascade;
-
-create table bookings (
+create table if not exists bookings (
   id uuid primary key default gen_random_uuid(),
 
-  -- The slot itself. Stored as timestamptz (i.e. an absolute instant, UTC
-  -- under the hood) so it means the same moment regardless of where the
-  -- prospect or the agency is reading it from. Wall-clock times only ever
-  -- get derived for display.
+  -- The slot itself. timestamptz (an absolute instant) so it means the same
+  -- moment wherever it's read from; wall-clock time is only ever derived for
+  -- display.
   starts_at timestamptz not null,
   duration_minutes int not null,
 
-  -- Captured so we can show a booking back to the prospect in the timezone
-  -- they actually booked from, rather than guessing later.
+  -- Captured so a booking can be shown back in the zone it was made from
+  -- rather than guessed at later.
   guest_timezone text not null,
 
   name text not null,
@@ -32,31 +31,26 @@ create table bookings (
 
 -- Stops two people racing into the same slot: the second insert violates
 -- this and the server action turns it into a "just got taken" message.
--- Partial, so a cancelled booking frees its slot back up.
-create unique index bookings_unique_active_slot
+-- Partial, so cancelling frees the slot back up.
+create unique index if not exists bookings_unique_active_slot
   on bookings (starts_at)
   where status = 'confirmed';
 
 -- Drives the availability lookup for the visible date range.
-create index bookings_starts_at_idx on bookings (starts_at);
+create index if not exists bookings_starts_at_idx on bookings (starts_at);
 
 alter table bookings enable row level security;
 
--- Booking a call is a public action — prospects are anonymous, so inserts
--- come through the anon role. Everything the client is allowed to do is an
--- insert; it cannot read anyone's booking back.
+-- Booking is a public action — prospects are anonymous, so inserts come
+-- through the anon role. Insert is all the client may do.
+drop policy if exists "anyone can request a booking" on bookings;
 create policy "anyone can request a booking" on bookings
   for insert to anon, authenticated with check (true);
 
--- Deliberately no select/update/delete policy for anon or authenticated.
--- With RLS on and no policy, those are denied by default, so contact
--- details are never readable from the client. Availability is computed by
--- server-side code (see src/lib/supabase/booking-queries.ts) which uses a
--- security-definer function rather than direct table reads, so it can tell
--- which slots are taken without ever exposing who booked them.
-
--- Returns only the start times of taken slots in a window — no names, no
--- emails. security definer so it bypasses RLS for this narrow purpose.
+-- Deliberately no select/update/delete policy. With RLS on and no policy
+-- those are denied by default, so contact details are never readable from
+-- the client. Availability comes from the function below instead, which can
+-- report which slots are taken without exposing who booked them.
 create or replace function taken_slots(range_start timestamptz, range_end timestamptz)
 returns table (starts_at timestamptz)
 language sql
