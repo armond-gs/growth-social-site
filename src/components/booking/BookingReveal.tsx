@@ -18,14 +18,35 @@ export function BookingReveal() {
   const [open, setOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
-  // Set when opening, consumed once the panel has actually rendered — the
-  // scroll has to wait for the expanded height to exist or it lands short.
-  const pendingScroll = useRef(false);
+
+  /**
+   * Scrolls the panel into view. Deliberately not driven by an effect keyed
+   * on `open`: re-opening an already-open panel doesn't change that state,
+   * so no effect would re-run and the click would appear to do nothing —
+   * which is exactly what happened when arriving at /#book (auto-opened
+   * while still scrolled to the top) or clicking a second CTA after
+   * scrolling back up.
+   *
+   * Two frames, because a first-time open needs one to mount and lay out
+   * before the second can measure where it landed.
+   */
+  const scrollToPanel = useCallback(() => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        panelRef.current?.scrollIntoView({
+          behavior: shouldReduceMotion ? "auto" : "smooth",
+          // `start`, not `center`: the panel grows downward over ~0.5s, so
+          // its top edge is a stable target while its middle is a moving one.
+          block: "start",
+        });
+      });
+    });
+  }, [shouldReduceMotion]);
 
   const handleOpen = useCallback(() => {
     setOpen(true);
-    pendingScroll.current = true;
-  }, []);
+    scrollToPanel();
+  }, [scrollToPanel]);
 
   useEffect(() => {
     window.addEventListener(BOOKING_OPEN_EVENT, handleOpen);
@@ -42,20 +63,6 @@ export function BookingReveal() {
       window.removeEventListener("hashchange", openIfAnchored);
     };
   }, [handleOpen]);
-
-  useEffect(() => {
-    if (!open || !pendingScroll.current) return;
-    pendingScroll.current = false;
-
-    // Next frame, so the panel has laid out before we scroll to it.
-    const frame = requestAnimationFrame(() => {
-      panelRef.current?.scrollIntoView({
-        behavior: shouldReduceMotion ? "auto" : "smooth",
-        block: "center",
-      });
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [open, shouldReduceMotion]);
 
   return (
     <div ref={panelRef} className="scroll-mt-24">

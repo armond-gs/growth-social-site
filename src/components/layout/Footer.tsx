@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { CONTAINER } from "@/lib/layout";
 import { FOOTER_LINKS } from "@/lib/data/landing";
+import { BookCallButton } from "@/components/booking/BookingReveal";
+import { BOOKING_ANCHOR } from "@/lib/booking/open";
 
 export function Footer() {
   return (
@@ -13,15 +15,22 @@ export function Footer() {
             <span className="text-lg font-bold tracking-[-0.02em]">Growth Social</span>
           </div>
           <div className="flex flex-wrap gap-x-[30px] gap-y-3">
-            {FOOTER_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-ink/60 no-underline"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {FOOTER_LINKS.map((link) => {
+              const className = "text-sm font-medium text-ink/60 no-underline";
+              // The booking link goes through the same opener as every other
+              // CTA. As a plain #book anchor it depended on `hashchange`,
+              // which doesn't fire when the hash is already #book — so it
+              // silently did nothing once the panel had been opened before.
+              return link.href === `#${BOOKING_ANCHOR}` ? (
+                <BookCallButton key={link.href} className={`${className} cursor-pointer`}>
+                  {link.label}
+                </BookCallButton>
+              ) : (
+                <Link key={link.href} href={link.href} className={className}>
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
         </div>
         <div className="mt-6 flex flex-wrap justify-between gap-4 font-mono text-xs text-ink/42">
