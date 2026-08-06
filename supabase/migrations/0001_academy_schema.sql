@@ -1,36 +1,35 @@
--- Creator Academy schema: real curriculum + per-user progress tracking,
--- replacing the hardcoded seed data in src/lib/data/academy.ts.
+-- Creator Academy schema: curriculum + per-user progress tracking.
 --
--- Safe to re-run: drops and rebuilds these three tables cleanly each time,
--- which is fine pre-launch since no real progress data exists yet. Don't
--- re-run this once real creators have real progress rows.
+-- Non-destructive and safe to re-run. It must stay that way: these files are
+-- visible to Supabase's GitHub integration, which applies any migration not
+-- recorded in supabase_migrations.schema_migrations. Since the original
+-- versions of these were applied by hand in the SQL Editor, they are not
+-- recorded — so an integration run would replay them. An earlier revision of
+-- this file opened with `drop table ... cascade`, which in that situation
+-- would have wiped real progress data. Never reintroduce a drop here.
 
-drop table if exists lesson_progress cascade;
-drop table if exists lessons cascade;
-drop table if exists modules cascade;
-
-create table modules (
+create table if not exists modules (
   id uuid primary key default gen_random_uuid(),
   no text not null unique,
   title text not null,
   sort_order int not null
 );
 
-create table lessons (
+create table if not exists lessons (
   id uuid primary key default gen_random_uuid(),
   module_id uuid not null references modules(id) on delete cascade,
   no text not null,
   title text not null,
   -- Cloudflare Stream video UID — null until the real lesson video is
-  -- uploaded and wired in. duration_seconds comes from Stream's own
-  -- metadata once a video exists, so it's null until then too.
+  -- uploaded. duration_seconds comes from Stream's own metadata, so it's
+  -- null until then too.
   video_uid text,
   duration_seconds int,
   sort_order int not null,
   unique (module_id, no)
 );
 
-create table lesson_progress (
+create table if not exists lesson_progress (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users(id) on delete cascade,
   lesson_id uuid not null references lessons(id) on delete cascade,
@@ -44,21 +43,33 @@ alter table modules enable row level security;
 alter table lessons enable row level security;
 alter table lesson_progress enable row level security;
 
--- Curriculum is visible to any logged-in creator.
+-- Policies are dropped and recreated rather than created blind: `create
+-- policy` has no `if not exists`, so a re-run would otherwise fail with
+-- 42710. Dropping a policy touches no rows.
+drop policy if exists "authenticated can read modules" on modules;
 create policy "authenticated can read modules" on modules
   for select to authenticated using (true);
+
+drop policy if exists "authenticated can read lessons" on lessons;
 create policy "authenticated can read lessons" on lessons
   for select to authenticated using (true);
 
--- Progress is private to the creator who owns it.
+drop policy if exists "users read own progress" on lesson_progress;
 create policy "users read own progress" on lesson_progress
   for select to authenticated using (auth.uid() = user_id);
+
+drop policy if exists "users insert own progress" on lesson_progress;
 create policy "users insert own progress" on lesson_progress
   for insert to authenticated with check (auth.uid() = user_id);
-create policy "users update own progress" on lesson_progress
-  for update to authenticated using (auth.uid() = user_id);
 
--- Seed: modules
+drop policy if exists "users update own progress" on lesson_progress;
+create policy "users update own progress" on lesson_progress
+  for update to authenticated using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
+-- Seed: modules. `on conflict do nothing` so a replay is a no-op instead of
+-- a duplicate-key failure, and so any title edits made in the dashboard
+-- aren't silently reverted.
 insert into modules (no, title, sort_order) values
   ('00', 'Limitless', 0),
   ('01', 'UGC Fundamentals', 1),
@@ -66,10 +77,11 @@ insert into modules (no, title, sort_order) values
   ('03', 'Editing', 3),
   ('04', 'Portfolio Creation', 4),
   ('05', 'Landing Clients', 5),
-  ('06', 'Scaling', 6);
+  ('06', 'Scaling', 6)
+on conflict (no) do nothing;
 
--- Seed: lessons (real titles from the design handoff; video_uid/duration
--- filled in per-lesson later as videos are uploaded to Cloudflare Stream)
+-- Seed: lessons. Same reasoning — and critically, this must not clobber
+-- video_uid/duration_seconds once real videos have been wired in.
 insert into lessons (module_id, no, title, sort_order)
 select id, 'L01', 'Understanding Limitless', 0 from modules where no = '00'
 union all select id, 'L02', 'Lifestyle', 1 from modules where no = '00'
@@ -108,4 +120,5 @@ union all select id, 'L06', 'Retainers', 5 from modules where no = '05'
 
 union all select id, 'L01', 'Systems', 0 from modules where no = '06'
 union all select id, 'L02', 'AI', 1 from modules where no = '06'
-union all select id, 'L03', 'Getting to $10k+/month', 2 from modules where no = '06';
+union all select id, 'L03', 'Getting to $10k+/month', 2 from modules where no = '06'
+on conflict (module_id, no) do nothing;
