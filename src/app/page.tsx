@@ -6,7 +6,6 @@ import { StatsSection } from "@/components/landing/StatsSection";
 import { ServicesSection } from "@/components/landing/ServicesSection";
 import { StatementBand } from "@/components/landing/StatementBand";
 import { ApproachSection } from "@/components/landing/ApproachSection";
-import { TestimonialsSection } from "@/components/landing/TestimonialsSection";
 import { FinalCta } from "@/components/landing/FinalCta";
 
 export default function Home() {
@@ -19,7 +18,10 @@ export default function Home() {
       <ServicesSection />
       <StatementBand />
       <ApproachSection />
-      <TestimonialsSection />
+      {/* Testimonials are hidden until there are real client quotes to show.
+          To restore: re-add <TestimonialsSection /> here (the component and
+          its data are still in the tree) and put the "Clients" #voices link
+          back into NAV_LINKS and FOOTER_LINKS. */}
       <FinalCta />
       <Footer />
     </div>

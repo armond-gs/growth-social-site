@@ -18,8 +18,11 @@ function Tags({ tags }: { tags: string[] }) {
 }
 
 export function ServicesSection() {
+  // Padding is asymmetric on purpose: the top edge meets the dark stats block
+  // and earns full spacing, but the bottom ran into Approach's matching pad,
+  // stacking to ~280px of dead space at desktop widths.
   return (
-    <section id="services" className="py-[clamp(72px,10vw,140px)]">
+    <section id="services" className="pt-[clamp(72px,10vw,140px)] pb-[clamp(40px,5vw,68px)]">
       <div className={CONTAINER}>
         <Reveal className="mb-[clamp(44px,6vw,80px)] max-w-[60ch]">
           <span className="font-mono text-[10.5px] tracking-[0.2em] text-ink/45 uppercase md:text-xs">

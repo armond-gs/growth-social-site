@@ -1,8 +1,9 @@
+// "Clients" (#voices) is omitted while the testimonials section is hidden —
+// it would scroll to nothing. Restore it alongside the section.
 export const NAV_LINKS = [
   { href: "#services", label: "Services" },
   { href: "#results", label: "Results" },
   { href: "#approach", label: "Approach" },
-  { href: "#voices", label: "Clients" },
 ];
 
 export type Clip = {
@@ -126,6 +127,5 @@ export const FOOTER_LINKS = [
   { href: "#services", label: "Services" },
   { href: "#results", label: "Results" },
   { href: "#approach", label: "Approach" },
-  { href: "#voices", label: "Clients" },
   { href: "#book", label: "Book a call" },
 ];
