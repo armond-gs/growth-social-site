@@ -4,7 +4,10 @@ import { formatLessonDuration } from "@/lib/academy/types";
 export function LessonCard({ lesson }: { lesson: LessonRow }) {
   return (
     <div className="w-[200px] flex-none snap-start md:w-[248px] md:snap-align-none">
-      <div className="relative aspect-video overflow-hidden rounded-xl border border-ink/10 bg-[repeating-linear-gradient(135deg,#e6e6da_0_12px,#eeeee4_12px_24px)]">
+      <div
+        className="relative aspect-video overflow-hidden rounded-xl border border-ink/10 bg-[repeating-linear-gradient(135deg,#e6e6da_0_12px,#eeeee4_12px_24px)] bg-cover bg-center"
+        style={lesson.thumbnailUrl ? { backgroundImage: `url(${lesson.thumbnailUrl})` } : undefined}
+      >
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="flex h-9.5 w-9.5 items-center justify-center rounded-full bg-green/92 md:h-11 md:w-11">
             <svg width="12" height="14" viewBox="0 0 14 16" className="md:h-4 md:w-3.5">

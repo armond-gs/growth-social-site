@@ -39,3 +39,17 @@ export function signStreamToken(videoUid: string, expiresInSeconds = 3600): stri
 
   return `${signingInput}.${base64url(signature)}`;
 }
+
+/**
+ * Builds a signed thumbnail URL (a still frame from the video) for a
+ * Stream video that has `requireSignedURLs` enabled. Same rule as
+ * playback: the token goes in the URL *path* in place of the video UID,
+ * not as a query param. Longer-lived than a playback token since it's
+ * just a JPEG, not the actual gated content.
+ */
+export function getThumbnailUrl(videoUid: string, expiresInSeconds = 60 * 60 * 6): string {
+  const customerCode = process.env.NEXT_PUBLIC_CLOUDFLARE_STREAM_CUSTOMER_CODE;
+  if (!customerCode) throw new Error("NEXT_PUBLIC_CLOUDFLARE_STREAM_CUSTOMER_CODE is not set");
+  const token = signStreamToken(videoUid, expiresInSeconds);
+  return `https://${customerCode}.cloudflarestream.com/${token}/thumbnails/thumbnail.jpg`;
+}

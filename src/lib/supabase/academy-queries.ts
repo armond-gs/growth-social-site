@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import type { ModuleRow, ContinueWatching } from "@/lib/academy/types";
+import { getThumbnailUrl } from "@/lib/cloudflare/stream";
 
 type ProgressRow = {
   lesson_id: string;
@@ -46,6 +47,7 @@ export async function getCurriculum(userId: string): Promise<ModuleRow[]> {
         title: l.title,
         videoUid: l.video_uid,
         durationSeconds: l.duration_seconds,
+        thumbnailUrl: l.video_uid ? getThumbnailUrl(l.video_uid) : null,
         done: !!progressByLesson.get(l.id)?.completed_at,
       })),
   }));
@@ -88,6 +90,7 @@ export async function getContinueWatching(
           progressPercent: percent,
           videoUid: lesson.videoUid,
           durationSeconds: lesson.durationSeconds,
+          thumbnailUrl: lesson.thumbnailUrl,
           isStart: false,
         };
       }
@@ -106,6 +109,7 @@ export async function getContinueWatching(
     progressPercent: 0,
     videoUid: firstLesson.videoUid,
     durationSeconds: firstLesson.durationSeconds,
+    thumbnailUrl: firstLesson.thumbnailUrl,
     isStart: true,
   };
 }
