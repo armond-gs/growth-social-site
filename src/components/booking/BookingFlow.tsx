@@ -143,7 +143,7 @@ export function BookingFlow({ onDone }: { onDone?: () => void }) {
   // ---- Confirmation -------------------------------------------------------
   if (step === "done" && chosenSlot) {
     return (
-      <div className="rounded-[20px] border border-ink/10 bg-cream-card p-7 text-center md:p-10">
+      <div className="rounded-[20px] border border-ink/10 bg-cream-card p-7 text-center text-ink md:p-10">
         <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-success">
           <svg width="20" height="15" viewBox="0 0 20 15" aria-hidden="true">
             <path d="M2 7.5l5.5 5L18 2" fill="none" stroke="#f1f1e7" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -179,7 +179,7 @@ export function BookingFlow({ onDone }: { onDone?: () => void }) {
   // ---- Details form -------------------------------------------------------
   if (step === "details" && chosenSlot) {
     return (
-      <div className="rounded-[20px] border border-ink/10 bg-cream-card p-6 md:p-9">
+      <div className="rounded-[20px] border border-ink/10 bg-cream-card p-6 text-ink md:p-9">
         <button
           type="button"
           onClick={() => {
@@ -252,7 +252,7 @@ export function BookingFlow({ onDone }: { onDone?: () => void }) {
 
   // ---- Date + time picker -------------------------------------------------
   return (
-    <div className="rounded-[20px] border border-ink/10 bg-cream-card p-6 md:p-9">
+    <div className="rounded-[20px] border border-ink/10 bg-cream-card p-6 text-ink md:p-9">
       <h3 className="m-0 text-[22px] font-bold tracking-[-0.02em] md:text-[26px]">
         Book a call
       </h3>
