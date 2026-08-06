@@ -16,11 +16,17 @@ export async function updateLessonProgress(lessonId: string, secondsWatched: num
   } = await supabase.auth.getUser();
   if (!user) return { error: "Not logged in" };
 
+  // seconds_watched is an int column and this value comes from the client —
+  // a player's currentTime is always fractional, and nothing stops a caller
+  // sending NaN or something negative. Normalise before it reaches Postgres.
+  if (!Number.isFinite(secondsWatched)) return { error: "Invalid progress value" };
+  const seconds = Math.max(0, Math.floor(secondsWatched));
+
   const { error } = await supabase.from("lesson_progress").upsert(
     {
       user_id: user.id,
       lesson_id: lessonId,
-      seconds_watched: secondsWatched,
+      seconds_watched: seconds,
       updated_at: new Date().toISOString(),
     },
     { onConflict: "user_id,lesson_id" },

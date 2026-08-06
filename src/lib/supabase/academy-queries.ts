@@ -97,19 +97,26 @@ export async function getContinueWatching(
     }
   }
 
-  // No progress yet — suggest the first lesson of the first module.
-  const firstModule = modules[0];
-  const firstLesson = firstModule?.lessons[0];
-  if (!firstModule || !firstLesson) return null;
+  // Nothing part-watched. Suggest the first lesson they haven't finished —
+  // not simply lesson 1, which would tell a creator who has completed the
+  // whole curriculum to "start" something they already did.
+  for (const mod of modules) {
+    const nextLesson = mod.lessons.find((l) => !l.done);
+    if (nextLesson) {
+      return {
+        lessonId: nextLesson.id,
+        moduleLabel: `Module ${mod.no} · ${mod.title}`,
+        lessonTitle: nextLesson.title,
+        progressPercent: 0,
+        videoUid: nextLesson.videoUid,
+        durationSeconds: nextLesson.durationSeconds,
+        thumbnailUrl: nextLesson.thumbnailUrl,
+        isStart: true,
+      };
+    }
+  }
 
-  return {
-    lessonId: firstLesson.id,
-    moduleLabel: `Module ${firstModule.no} · ${firstModule.title}`,
-    lessonTitle: firstLesson.title,
-    progressPercent: 0,
-    videoUid: firstLesson.videoUid,
-    durationSeconds: firstLesson.durationSeconds,
-    thumbnailUrl: firstLesson.thumbnailUrl,
-    isStart: true,
-  };
+  // Every lesson is done — the card has nothing useful to say, so the
+  // caller hides it rather than inventing a next step.
+  return null;
 }

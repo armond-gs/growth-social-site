@@ -12,9 +12,16 @@
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.110.1",
     "framer-motion": "^12.42.2",
-    "next": "16.2.10",
+    "next": "16.2.12",
     "react": "19.2.4",
     "react-dom": "19.2.4"
+  },
+  "comments": {
+    "overrides": "Both are transitive deps of next that it still resolves to advisory-affected versions (sharp 0.34.x -> GHSA-f88m-g3jw-g9cj; postcss <=8.5.22 -> the sourceMappingURL/stringify advisories). Pinned forward here rather than jumping to next 16.3.0. Drop these once next resolves patched versions itself."
+  },
+  "overrides": {
+    "sharp": "^0.35.3",
+    "postcss": "^8.5.26"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -22,7 +29,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.10",
+    "eslint-config-next": "16.2.12",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
