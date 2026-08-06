@@ -3,8 +3,11 @@ import { PRINCIPLES } from "@/lib/data/landing";
 import { Reveal } from "@/components/ui/Reveal";
 
 export function ApproachSection() {
+  // Padding is asymmetric on purpose: tightened at the top to close the gap
+  // with Services above, full spacing at the bottom where it meets the dark
+  // final-CTA block.
   return (
-    <section id="approach" className="bg-panel py-[clamp(72px,10vw,140px)]">
+    <section id="approach" className="bg-panel pt-[clamp(40px,5vw,68px)] pb-[clamp(72px,10vw,140px)]">
       <div className={CONTAINER}>
         <Reveal className="mb-[clamp(48px,6vw,84px)]">
           <span className="font-mono text-[10.5px] tracking-[0.2em] text-ink/45 uppercase md:text-xs">
