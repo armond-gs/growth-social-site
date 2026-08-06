@@ -85,7 +85,7 @@ function StreamPlayer({ videoUid, onEnded }: { videoUid: string; onEnded?: () =>
   return (
     <iframe
       ref={iframeRef}
-      src={`https://${CUSTOMER_CODE}.cloudflarestream.com/${videoUid}/iframe?token=${token}&autoplay=true`}
+      src={`https://${CUSTOMER_CODE}.cloudflarestream.com/${token}/iframe?autoplay=true`}
       className="h-full w-full"
       allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
       allowFullScreen
