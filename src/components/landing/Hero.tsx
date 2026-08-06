@@ -3,6 +3,7 @@ import { CONTAINER } from "@/lib/layout";
 import { CLIPS } from "@/lib/data/landing";
 import { Reveal } from "@/components/ui/Reveal";
 import { ReelStrip } from "@/components/landing/ReelStrip";
+import { BookCallButton } from "@/components/booking/BookingReveal";
 
 export function Hero() {
   return (
@@ -51,12 +52,9 @@ export function Hero() {
             delay={300}
             className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:items-center md:gap-5"
           >
-            <Link
-              href="#book"
-              className="flex items-center justify-center gap-2 rounded-[14px] bg-green px-6 py-4 font-semibold text-cream no-underline transition-all duration-300 ease-out md:inline-flex md:w-auto md:rounded-full md:px-[26px] md:hover:-translate-y-0.5 md:hover:bg-green-hover md:hover:shadow-[0_16px_30px_-14px_rgba(20,56,40,0.7)]"
-            >
+            <BookCallButton className="flex cursor-pointer items-center justify-center gap-2 rounded-[14px] bg-green px-6 py-4 font-semibold text-cream no-underline transition-all duration-300 ease-out md:inline-flex md:w-auto md:rounded-full md:px-[26px] md:hover:-translate-y-0.5 md:hover:bg-green-hover md:hover:shadow-[0_16px_30px_-14px_rgba(20,56,40,0.7)]">
               Book a call <span className="font-mono">→</span>
-            </Link>
+            </BookCallButton>
             <Link
               href="#services"
               className="flex items-center justify-center rounded-[14px] border border-ink/20 px-6 py-3.5 font-semibold text-ink no-underline md:inline-flex md:w-auto md:border-0 md:border-b md:border-ink/30 md:rounded-none md:px-0 md:py-0 md:pb-[3px]"

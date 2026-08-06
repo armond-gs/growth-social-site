@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { NAV_LINKS } from "@/lib/data/landing";
-import { PillButton } from "@/components/ui/Button";
+import { BookCallButton } from "@/components/booking/BookingReveal";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -47,9 +47,9 @@ export function Nav() {
         >
           Creator login
         </Link>
-        <PillButton href="#book" className="px-5 py-[11px] text-[14.5px]">
+        <BookCallButton className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-green px-5 py-[11px] text-[14.5px] font-semibold text-cream no-underline transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-green-hover hover:shadow-[0_16px_30px_-14px_rgba(20,56,40,0.7)]">
           Book a call
-        </PillButton>
+        </BookCallButton>
       </div>
 
       {/* Mobile */}
@@ -57,12 +57,9 @@ export function Nav() {
         <Link href="/academy" className="text-[13px] font-medium text-ink/60 no-underline">
           Log in
         </Link>
-        <Link
-          href="#book"
-          className="rounded-full bg-green px-[15px] py-[9px] text-[13px] font-semibold text-cream no-underline"
-        >
+        <BookCallButton className="cursor-pointer rounded-full bg-green px-[15px] py-[9px] text-[13px] font-semibold text-cream no-underline">
           Book a call
-        </Link>
+        </BookCallButton>
       </div>
     </nav>
   );
