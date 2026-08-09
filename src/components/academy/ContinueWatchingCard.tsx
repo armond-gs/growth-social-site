@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ContinueWatching } from "@/lib/academy/types";
 import { formatLessonDuration } from "@/lib/academy/types";
+import { PlaceholderMark } from "@/components/academy/PlaceholderMark";
 
 export function ContinueWatchingCard({ data }: { data: ContinueWatching }) {
   const { moduleLabel, lessonTitle, progressPercent, durationSeconds, thumbnailUrl, isStart } = data;
@@ -11,6 +12,7 @@ export function ContinueWatchingCard({ data }: { data: ContinueWatching }) {
         className="relative aspect-video overflow-hidden rounded-xl bg-[repeating-linear-gradient(135deg,#16281f_0_14px,#1d3327_14px_28px)] bg-cover bg-center"
         style={thumbnailUrl ? { backgroundImage: `url(${thumbnailUrl})` } : undefined}
       >
+        {!thumbnailUrl && <PlaceholderMark tone="light" />}
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="flex h-14 w-14 items-center justify-center rounded-full bg-cream/92 md:h-16 md:w-16">
             <svg width="18" height="20" viewBox="0 0 20 22" className="md:h-[22px] md:w-5">
