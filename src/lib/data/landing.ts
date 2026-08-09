@@ -129,3 +129,166 @@ export const FOOTER_LINKS = [
   { href: "#approach", label: "Approach" },
   { href: "#book", label: "Book a call" },
 ];
+
+/* ---------------------------------------------------------------------------
+   Audience modes
+   ---------------------------------------------------------------------------
+   The landing page addresses two audiences from the same URL. Everything that
+   differs between them lives here as data — copy, stats, the service/step
+   cards and the principles — so the components stay mode-agnostic and render
+   whichever object is active.
+
+   NOTE: every stat, number and results line on both sides is placeholder copy
+   pending real figures from the client. Kept as data precisely so swapping
+   them is an edit here rather than a hunt through JSX.
+--------------------------------------------------------------------------- */
+
+export type AudienceMode = "brand" | "creator";
+
+export type Stat = { value: string; suffix: string; label: string };
+export type Service = { no: string; title: string; desc: string; tags: string[] };
+export type Principle = { no: string; title: string; body: string };
+
+export type LandingCopy = {
+  heroKicker: string;
+  heroLine1: string;
+  heroLine2: string;
+  heroLine3: string;
+  heroBody: string;
+  heroCta: string;
+  heroCtaHref: string;
+  /** Brand's primary CTA opens the inline booking panel rather than navigating. */
+  heroCtaOpensBooking: boolean;
+  heroAlt: string;
+  heroAltHref: string;
+  statusLabel: string;
+  proofLabel: string;
+  resultsHeading: string;
+  servicesKicker: string;
+  servicesHeadA: string;
+  servicesHeadItalic: string;
+  servicesHeadB: string;
+  approachHeadA: string;
+  approachHeadItalic: string;
+  ctaKicker: string;
+  ctaHeadA: string;
+  ctaHeadItalic: string;
+  navCta: string;
+  navCtaHref: string;
+  /** Brand's nav CTA opens the inline booking panel; creator's navigates. */
+  navCtaOpensBooking: boolean;
+  stats: Stat[];
+  services: Service[];
+  principles: Principle[];
+};
+
+const CREATOR_STATS: Stat[] = [
+  { value: "150", suffix: "+", label: "Creators earning with us right now" },
+  { value: "7", suffix: "d", label: "From accepted application to first paid brief" },
+  { value: "20", suffix: "+", label: "Academy lessons, free once you’re in" },
+  { value: "2", suffix: "x", label: "Average rate increase in a creator’s first year" },
+];
+
+const CREATOR_SERVICES: Service[] = [
+  {
+    no: "01",
+    title: "Apply & get vetted",
+    desc: "Send us your handle and a couple of clips. No follower minimums — we care how you shoot, talk and take direction.",
+    tags: ["No follower minimum", "48hr response", "Portfolio review"],
+  },
+  {
+    no: "02",
+    title: "Get coached",
+    desc: "Full access to the Creator Academy: hooks, filming, editing, portfolio and client-landing modules, plus intro sessions with Noel and Joey.",
+    tags: ["Creator Academy", "Hook libraries", "1:1 feedback"],
+  },
+  {
+    no: "03",
+    title: "Get paid to post",
+    desc: "We match you to briefs from real brands, handle the contracts and invoicing, and pay flat rate per approved video.",
+    tags: ["Flat rate per video", "Repeat clients", "We handle contracts"],
+  },
+];
+
+const CREATOR_PRINCIPLES: Principle[] = [
+  {
+    no: "01",
+    title: "Paid properly, on time",
+    body: "Flat rates agreed up front and paid on schedule — no chasing invoices, no commission-only roulette.",
+  },
+  {
+    no: "02",
+    title: "Coached, not just booked",
+    body: "You get reviews, hook libraries and real feedback after every batch. You should be a better creator six months in.",
+  },
+  {
+    no: "03",
+    title: "Long-term, not one-off",
+    body: "We build repeat relationships with brands so our creators get steady work instead of scrambling for the next gig.",
+  },
+];
+
+export const LANDING_COPY: Record<AudienceMode, LandingCopy> = {
+  brand: {
+    heroKicker: "UGC Agency",
+    heroLine1: "Creator‑focused.",
+    heroLine2: "Outcome‑obsessed.",
+    heroLine3: "Against the grain.",
+    heroBody:
+      "Growth Social is a UGC agency built around the people who make the content — and the results our clients actually care about. We coach creators like a team and measure ourselves on your numbers.",
+    heroCta: "Book a call",
+    heroCtaHref: "/book",
+    heroCtaOpensBooking: true,
+    heroAlt: "See the work",
+    heroAltHref: "#services",
+    statusLabel: "Now booking",
+    proofLabel: "Trusted by brands of every size",
+    resultsHeading: "Content that earns its place in the ad account.",
+    servicesKicker: "/ What we do",
+    servicesHeadA: "Three things, done ",
+    servicesHeadItalic: "obsessively",
+    servicesHeadB: " well.",
+    approachHeadA: "Traditional agencies optimize for output.",
+    approachHeadItalic: "We optimize for you.",
+    ctaKicker: "/ Let’s talk",
+    ctaHeadA: "Content that",
+    ctaHeadItalic: "performs.",
+    navCta: "Book a call",
+    navCtaHref: "/book",
+    navCtaOpensBooking: true,
+    stats: STATS,
+    services: SERVICES,
+    principles: PRINCIPLES,
+  },
+  creator: {
+    heroKicker: "For creators",
+    heroLine1: "Get paid to post.",
+    heroLine2: "Get coached to win.",
+    heroLine3: "Grow on purpose.",
+    heroBody:
+      "Flat rates per approved video, briefs from real brands, and a full Academy behind you. We treat creators like a roster, not a headcount — coached, paid properly and booked again.",
+    heroCta: "Apply to create",
+    heroCtaHref: "https://apply.growthsocialhq.com",
+    heroCtaOpensBooking: false,
+    heroAlt: "Log into the portal",
+    heroAltHref: "/academy",
+    statusLabel: "Applications open",
+    proofLabel: "Brands our creators have shot for",
+    resultsHeading: "A roster that gets better every single month.",
+    servicesKicker: "/ How it works",
+    servicesHeadA: "Three steps, no ",
+    servicesHeadItalic: "gatekeeping",
+    servicesHeadB: ".",
+    approachHeadA: "Most agencies treat creators as headcount.",
+    approachHeadItalic: "We treat you as the roster.",
+    ctaKicker: "/ Join the roster",
+    ctaHeadA: "Creators who",
+    ctaHeadItalic: "get booked.",
+    navCta: "Log into portal",
+    navCtaHref: "/academy",
+    navCtaOpensBooking: false,
+    stats: CREATOR_STATS,
+    services: CREATOR_SERVICES,
+    principles: CREATOR_PRINCIPLES,
+  },
+};

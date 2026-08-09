@@ -4,7 +4,8 @@ import { Marquee } from "@/components/ui/Marquee";
 
 export function StatementBand() {
   return (
-    <div className="relative hidden overflow-hidden bg-green py-[clamp(20px,2.4vw,34px)] text-cream md:block">
+    <div className="mode-band relative hidden overflow-hidden py-[clamp(20px,2.4vw,34px)] md:block"
+      style={{ background: "var(--band-bg)", color: "var(--band-fg)" }}>
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_120%_at_50%_50%,transparent_40%,rgba(0,0,0,0.18))]" />
       <div className="relative">
         <Marquee
@@ -27,7 +28,8 @@ export function StatementBand() {
                 aria-hidden="true"
                 width={34}
                 height={36}
-                className="h-[0.62em] w-auto opacity-65"
+                className="h-[0.62em] w-auto opacity-65 transition-[filter] duration-[900ms]"
+                style={{ filter: "var(--watermark-filter)" }}
               />
             </span>
           ))}

@@ -1,3 +1,4 @@
+import { ModeProvider } from "@/lib/landing/mode";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/landing/Hero";
@@ -10,7 +11,9 @@ import { FinalCta } from "@/components/landing/FinalCta";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[radial-gradient(135%_95%_at_50%_-12%,#f6f6ee_0%,#f1f1e7_44%,#eaeadd_100%)]">
+    // ModeProvider renders the page wrapper: it owns the data-mode attribute
+    // the whole palette keys off, and the wash that cross-fades on switch.
+    <ModeProvider>
       <Nav />
       <Hero />
       <BrandsSection />
@@ -18,12 +21,11 @@ export default function Home() {
       <ServicesSection />
       <StatementBand />
       <ApproachSection />
-      {/* Testimonials are hidden until there are real client quotes to show.
-          To restore: re-add <TestimonialsSection /> here (the component and
-          its data are still in the tree) and put the "Clients" #voices link
-          back into NAV_LINKS and FOOTER_LINKS. */}
+      {/* Testimonials stay out until there are real client quotes. To restore:
+          re-add <TestimonialsSection /> here and the "Clients" #voices link to
+          NAV_LINKS and FOOTER_LINKS. */}
       <FinalCta />
       <Footer />
-    </div>
+    </ModeProvider>
   );
 }
