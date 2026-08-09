@@ -33,10 +33,13 @@ export function Footer() {
               // which doesn't fire when the hash is already #book — so it
               // silently did nothing once the panel had been opened before.
               if (link.href === `#${BOOKING_ANCHOR}`) {
-                // Follows the active mode: book a call, or apply.
+                // Follows the active mode, using the primary CTA's own label
+                // and href together — pairing navCta's label with heroCtaHref
+                // made the creator link read "Log into portal" while actually
+                // pointing at the application.
                 return copy.heroCtaOpensBooking ? (
                   <BookCallButton key={link.href} className={`${className} cursor-pointer`}>
-                    {copy.navCta}
+                    {copy.heroCta}
                   </BookCallButton>
                 ) : (
                   <a
@@ -46,7 +49,7 @@ export function Footer() {
                     rel="noopener noreferrer"
                     className={className}
                   >
-                    {copy.navCta}
+                    {copy.heroCta}
                   </a>
                 );
               }
