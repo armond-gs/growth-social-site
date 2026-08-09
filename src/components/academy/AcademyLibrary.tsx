@@ -53,7 +53,7 @@ export function AcademyLibrary({
             Log out
           </button>
           <div className="order-2 flex items-center gap-2.5 md:order-1">
-            <AvatarPlaceholder size={32} />
+            <AvatarPlaceholder size={32} name={displayName} />
             <span className="hidden text-sm font-semibold md:inline">{displayName}</span>
           </div>
         </div>
