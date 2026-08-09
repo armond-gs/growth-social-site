@@ -1,5 +1,6 @@
 import type { CoachRow } from "@/lib/academy/types";
 import { formatLessonDuration } from "@/lib/academy/types";
+import { PlaceholderMark } from "@/components/academy/PlaceholderMark";
 
 export function CoachCard({ coach, onOpen }: { coach: CoachRow; onOpen: () => void }) {
   return (
@@ -11,6 +12,7 @@ export function CoachCard({ coach, onOpen }: { coach: CoachRow; onOpen: () => vo
         className="relative aspect-video w-full overflow-hidden rounded-xl border border-ink/10 bg-[repeating-linear-gradient(135deg,#e6e6da_0_14px,#eeeee4_14px_28px)] bg-cover bg-center text-left md:rounded-[14px]"
         style={{ backgroundImage: `url(${coach.thumbnailUrl})` }}
       >
+        {!coach.thumbnailUrl && <PlaceholderMark tone="dark" />}
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="flex h-11 w-11 items-center justify-center rounded-full bg-ink/90 md:h-14 md:w-14">
             <svg width="14" height="16" viewBox="0 0 14 16" className="md:h-5 md:w-[18px]">
