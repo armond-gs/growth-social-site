@@ -56,7 +56,8 @@ export function ReelCard({ clip, onOpen }: { clip: Clip; onOpen: () => void }) {
       type="button"
       onClick={onOpen}
       aria-label={`Play reel: ${label}`}
-      className="group relative aspect-[9/16] w-[clamp(150px,15vw,210px)] flex-none cursor-pointer overflow-hidden rounded-2xl border border-ink/9 bg-[repeating-linear-gradient(135deg,#e8e8dc_0_11px,#eeeee4_11px_22px)] text-left"
+      className="group relative aspect-[9/16] w-[clamp(150px,15vw,210px)] flex-none cursor-pointer overflow-hidden rounded-2xl border border-[var(--rule)] text-left"
+      style={{ background: "var(--reel-bg)" }}
     >
       {src && (
         <video

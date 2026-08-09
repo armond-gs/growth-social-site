@@ -15,46 +15,79 @@
   * { box-sizing: border-box; }
   body { margin: 0; background: #e4e4d8; }
   ::selection { background: #111110; color: #f1f1e7; }
+  a { color: inherit; }
+  a:hover { color: inherit; }
   .gs-scroll::-webkit-scrollbar { display: none; }
   @keyframes gs-marq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @keyframes gs-marq-rev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
   @keyframes gs-rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  @keyframes gs-word { from { opacity: 0; transform: translateY(112%); } to { opacity: 1; transform: none; } }
+  @keyframes gs-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.82); } }
 </style>
 </helmet>
 
 <div style="min-height:100vh; width:100%; display:flex; justify-content:center; align-items:flex-start; padding:40px 16px; background:radial-gradient(120% 80% at 50% 0%, #efefe4 0%, #e0e0d3 100%);">
-  <x-import component-from-global-scope="IOSDevice" from="./frames/ios-frame.jsx" hint-size="402px,874px">
+  <x-import component-from-global-scope="IOSDevice" from="./frames/ios-frame.jsx" dark="{{ isCreator }}" hint-size="402px,874px">
 
-    <div ref="{{ setRoot }}" style="background:#f1f1e7; color:#111110; font-family:'Archivo', system-ui, sans-serif; -webkit-font-smoothing:antialiased; min-height:100%;">
+    <div ref="{{ setRoot }}" style="position:relative; background:{{ pageWash }}; transition:background 1.1s cubic-bezier(.16,1,.3,1); color:{{ fg }}; font-family:'Archivo', system-ui, sans-serif; -webkit-font-smoothing:antialiased; min-height:100%;">
+
+      <div style="position:absolute; inset:0; z-index:30; pointer-events:none; opacity:0.4; mix-blend-mode:soft-light; background-image:url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22160%22%20height=%22160%22%3E%3Cfilter%20id=%22n%22%3E%3CfeTurbulence%20type=%22fractalNoise%22%20baseFrequency=%220.9%22%20numOctaves=%222%22%20stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect%20width=%22100%25%22%20height=%22100%25%22%20filter=%22url(%23n)%22/%3E%3C/svg%3E');"></div>
 
       <!-- Top bar -->
-      <div style="display:flex; align-items:center; justify-content:space-between; padding:60px 20px 14px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:60px 20px 14px; border-bottom:1px solid {{ rule }};">
         <div style="display:flex; align-items:center; gap:8px;">
-          <img src="assets/logo-green.png" alt="Growth Social" style="height:24px; width:auto; display:block;" />
+          <sc-if value="{{ isBrand }}" hint-placeholder-val="{{ true }}"><img src="assets/logo-green.png" alt="Growth Social" style="height:24px; width:auto; display:block;" /></sc-if>
+          <sc-if value="{{ isCreator }}" hint-placeholder-val="{{ false }}"><img src="assets/logo-cream.png" alt="Growth Social" style="height:24px; width:auto; display:block;" /></sc-if>
           <span style="font-weight:700; font-size:16px; letter-spacing:-0.02em;">Growth Social</span>
         </div>
-        <div style="display:flex; align-items:center; gap:14px;">
-          <a href="Creator%20Academy.dc.html" style="text-decoration:none; color:rgba(17,17,16,0.6); font-weight:500; font-size:13px;">Log in</a>
-          <a href="#book" style="text-decoration:none; background:#143828; color:#f1f1e7; font-weight:600; font-size:13px; padding:9px 15px; border-radius:999px;">Book a call</a>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="display:inline-flex; align-items:center; gap:6px; font-family:'Space Mono',monospace; font-size:9.5px; letter-spacing:0.09em; text-transform:uppercase; color:{{ fgSubtle }};">
+            <span style="width:5px; height:5px; border-radius:50%; background:{{ dotBg }}; animation:gs-pulse 2.4s ease-in-out infinite;"></span>{{ statusLabel }}
+          </span>
+          <a href="{{ navCtaHref }}" style="text-decoration:none; background:{{ btnBg }}; color:{{ btnFg }}; font-weight:600; font-size:13px; padding:9px 15px; border-radius:999px;">{{ navCta }}</a>
         </div>
       </div>
 
       <!-- HERO -->
-      <section style="padding:16px 20px 8px;">
-        <div data-reveal style="opacity:1; display:flex; align-items:center; gap:10px; margin-bottom:22px;">
-          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.5);">UGC Agency</span>
-          <span style="height:1px; width:28px; background:rgba(17,17,16,0.28);"></span>
-          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.5);">Est. 2026</span>
+      <section style="position:relative; padding:20px 20px 8px;">
+        <img src="assets/logo-green.png" alt="" aria-hidden="true" style="filter:{{ heroWm }}; position:absolute; right:-16%; top:-4%; width:230px; opacity:0.05; pointer-events:none;" />
+
+        <div style="position:relative; display:flex; justify-content:center; margin-bottom:22px;">
+          <div style="position:relative; display:flex; align-items:center; padding:4px; border-radius:999px; border:1px solid {{ rule }}; background:{{ chipBg }};">
+            <span ref="{{ setThumb }}" style="position:absolute; top:4px; bottom:4px; left:0; width:0; background:{{ thumbBg }}; border-radius:999px; transition:transform .42s cubic-bezier(.16,1,.3,1), width .42s cubic-bezier(.16,1,.3,1);"></span>
+            <button type="button" ref="{{ setBrandBtn }}" onClick="{{ pickBrand }}" style="position:relative; border:0; background:none; cursor:pointer; font-family:inherit; font-weight:600; font-size:13px; letter-spacing:-0.01em; padding:9px 16px; border-radius:999px; transition:color .3s ease; color:{{ brandTint }};">I'm a brand</button>
+            <button type="button" ref="{{ setCreatorBtn }}" onClick="{{ pickCreator }}" style="position:relative; border:0; background:none; cursor:pointer; font-family:inherit; font-weight:600; font-size:13px; letter-spacing:-0.01em; padding:9px 16px; border-radius:999px; transition:color .3s ease; color:{{ creatorTint }};">I'm a creator</button>
+          </div>
         </div>
-        <h1 style="margin:0; font-weight:800; font-size:41px; line-height:0.98; letter-spacing:-0.035em;">
-          <span data-reveal style="opacity:1; display:block;">Creator‑focused.</span>
-          <span data-reveal data-delay="80" style="opacity:1; display:block; font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">Outcome‑obsessed.</span>
-          <span data-reveal data-delay="160" style="opacity:1; display:block;">Against the grain.</span>
+
+        <div data-reveal style="position:relative; opacity:1; display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+          <span data-tick style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:{{ fgSubtle }}; white-space:nowrap;">{{ heroKicker }}</span>
+          <span style="height:1px; flex:1; background:linear-gradient(90deg, {{ ruleStrong }}, {{ rule }});"></span>
+          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:{{ fgSubtle }}; white-space:nowrap;">Est. 2026</span>
+        </div>
+
+        <h1 style="position:relative; margin:0; font-weight:800; font-size:41px; line-height:0.98; letter-spacing:-0.035em;">
+          <span style="display:flex; flex-wrap:wrap; column-gap:0.24em;">
+            <sc-for list="{{ heroWords1 }}" as="w" hint-placeholder-count="1">
+              <span style="display:inline-block; overflow:hidden; padding-bottom:0.14em; margin-bottom:-0.14em;"><span data-reveal data-anim="word" data-delay="{{ w.delay }}" style="display:inline-block; opacity:1;">{{ w.t }}</span></span>
+            </sc-for>
+          </span>
+          <span style="display:flex; flex-wrap:wrap; column-gap:0.24em; font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500; font-size:0.95em; letter-spacing:-0.012em;">
+            <sc-for list="{{ heroWords2 }}" as="w" hint-placeholder-count="1">
+              <span style="display:inline-block; overflow:hidden; padding-bottom:0.16em; margin-bottom:-0.16em;"><span data-reveal data-anim="word" data-delay="{{ w.delay }}" style="display:inline-block; opacity:1;">{{ w.t }}</span></span>
+            </sc-for>
+          </span>
+          <span style="display:flex; flex-wrap:wrap; column-gap:0.24em;">
+            <sc-for list="{{ heroWords3 }}" as="w" hint-placeholder-count="1">
+              <span style="display:inline-block; overflow:hidden; padding-bottom:0.14em; margin-bottom:-0.14em;"><span data-reveal data-anim="word" data-delay="{{ w.delay }}" style="display:inline-block; opacity:1;">{{ w.t }}</span></span>
+            </sc-for>
+          </span>
         </h1>
-        <p data-reveal data-delay="220" style="opacity:1; margin:22px 0 0; font-size:16px; line-height:1.55; color:rgba(17,17,16,0.68);">A UGC agency built around the people who make the content — and the results our clients actually care about.</p>
-        <div data-reveal data-delay="280" style="opacity:1; margin-top:26px; display:flex; flex-direction:column; gap:12px;">
-          <a href="#book" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; background:#143828; color:#f1f1e7; font-weight:600; font-size:16px; padding:16px; border-radius:14px;">Book a call <span style="font-family:'Space Mono',monospace;">→</span></a>
-          <a href="#services" style="text-decoration:none; display:flex; align-items:center; justify-content:center; color:#111110; font-weight:600; font-size:15px; padding:14px; border:1px solid rgba(17,17,16,0.2); border-radius:14px;">See the work</a>
+
+        <p data-reveal data-delay="220" style="position:relative; opacity:1; margin:22px 0 0; font-size:16px; line-height:1.55; color:{{ fgMuted }};">{{ heroBody }}</p>
+        <div data-reveal data-delay="280" style="position:relative; opacity:1; margin-top:26px; display:flex; flex-direction:column; gap:12px;">
+          <a href="{{ heroCtaHref }}" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; background:{{ btnBg }}; color:{{ btnFg }}; font-weight:600; font-size:16px; padding:16px; border-radius:14px;">{{ heroCta }} <span style="font-family:'Space Mono',monospace;">→</span></a>
+          <a href="{{ heroAltHref }}" style="text-decoration:none; display:flex; align-items:center; justify-content:center; color:{{ fg }}; font-weight:600; font-size:15px; padding:14px; border:1px solid {{ ruleStrong }}; border-radius:14px;">{{ heroAlt }}</a>
         </div>
       </section>
 
@@ -62,9 +95,11 @@
       <div class="gs-scroll" style="margin-top:24px; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);">
         <div data-marquee="clips" style="display:flex; gap:12px; width:max-content; padding:0 8px; animation:gs-marq 40s linear infinite;">
           <sc-for list="{{ clipsLoop }}" as="clip" hint-placeholder-count="10">
-            <div style="flex:0 0 auto; width:118px; aspect-ratio:9/16; border-radius:14px; overflow:hidden; position:relative; border:1px solid rgba(17,17,16,0.09); background:repeating-linear-gradient(135deg,#e8e8dc 0 10px,#eeeee4 10px 20px);">
-              <span style="position:absolute; top:9px; left:9px; font-family:'Space Mono',monospace; font-size:8.5px; letter-spacing:0.06em; color:rgba(17,17,16,0.55); background:rgba(241,241,231,0.7); padding:2px 5px; border-radius:5px;">{{ clip.id }}</span>
-              <span style="position:absolute; bottom:9px; left:9px; right:9px; font-family:'Space Mono',monospace; font-size:9px; color:rgba(17,17,16,0.6);">{{ clip.label }}</span>
+            <div style="flex:0 0 auto; width:118px; aspect-ratio:9/16; border-radius:14px; overflow:hidden; position:relative; border:1px solid {{ rule }}; background:{{ reelBg }};">
+              <span style="position:absolute; bottom:9px; right:9px; display:inline-flex; align-items:center; gap:4px; font-family:'Space Mono',monospace; font-size:9.5px; font-weight:700; color:#f1f1e7; background:rgba(17,17,16,0.65); padding:3px 6px; border-radius:5px;">
+                <svg width="10" height="7" viewBox="0 0 14 10" fill="none" style="flex:0 0 auto;"><path d="M1 5C2.5 2 4.5 0.5 7 0.5S11.5 2 13 5c-1.5 3-3.5 4.5-6 4.5S2.5 8 1 5Z" stroke="currentColor" stroke-width="1"></path><circle cx="7" cy="5" r="1.6" fill="currentColor"></circle></svg>
+                {{ clip.views }}
+              </span>
             </div>
           </sc-for>
         </div>
@@ -72,14 +107,14 @@
 
       <!-- SOCIAL PROOF -->
       <sc-if value="{{ showBrandRow }}" hint-placeholder-val="{{ true }}">
-      <section style="padding:26px 0; margin-top:20px; border-top:1px solid rgba(17,17,16,0.1); border-bottom:1px solid rgba(17,17,16,0.1);">
+      <section style="padding:26px 0; margin-top:20px; border-top:1px solid {{ rule }}; border-bottom:1px solid {{ rule }};">
         <div style="padding:0 20px 16px;">
-          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(17,17,16,0.45);">Trusted by brands of every size</span>
+          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:{{ fgSubtle }};">{{ proofLabel }}</span>
         </div>
         <div class="gs-scroll" style="overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);">
           <div data-marquee="brands" style="display:flex; gap:36px; width:max-content; align-items:center; animation:gs-marq-rev 34s linear infinite;">
             <sc-for list="{{ brandsLoop }}" as="brand" hint-placeholder-count="12">
-              <span style="font-weight:700; font-size:22px; letter-spacing:-0.02em; color:rgba(17,17,16,0.34); white-space:nowrap;">{{ brand }}</span>
+              <span style="font-weight:700; font-size:22px; letter-spacing:-0.02em; color:{{ fgFaint }}; white-space:nowrap;">{{ brand }}</span>
             </sc-for>
           </div>
         </div>
@@ -87,43 +122,50 @@
       </sc-if>
 
       <!-- RESULTS / STATS -->
-      <section id="results" style="background:#143828; color:#f1f1e7; padding:44px 20px;">
-        <div data-reveal style="opacity:1; margin-bottom:30px;">
-          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(241,241,231,0.5);">/ The receipts</span>
-          <h2 style="margin:14px 0 0; font-weight:700; font-size:28px; line-height:1.05; letter-spacing:-0.025em;">Content that earns its place in the ad account.</h2>
+      <section id="results" style="position:relative; overflow:hidden; background:{{ darkBg }}; transition:background .9s ease; color:{{ bandFg }}; padding:44px 20px;">
+        <div style="position:absolute; inset:0; pointer-events:none; background:radial-gradient(90% 60% at 10% 0%, {{ bandGlow }}, transparent 55%);"></div>
+        <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="filter:{{ bandWm }}; position:absolute; right:-10%; bottom:-8%; width:280px; opacity:0.05; pointer-events:none;" />
+        <div data-reveal style="position:relative; opacity:1; margin-bottom:30px;">
+          <span data-tick style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:{{ bandSubtle }};">/ The receipts</span>
+          <h2 style="margin:14px 0 0; font-weight:700; font-size:28px; line-height:1.05; letter-spacing:-0.025em;">{{ resultsHeading }}</h2>
         </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(241,241,231,0.14); border:1px solid rgba(241,241,231,0.14); border-radius:14px; overflow:hidden;">
-          <sc-for list="{{ stats }}" as="stat" hint-placeholder-count="4">
-            <div style="background:#111110; padding:22px 18px;">
-              <div style="font-weight:800; font-size:44px; line-height:1; letter-spacing:-0.03em; display:flex; align-items:baseline;">
-                <span data-count="{{ stat.value }}">0</span><span style="font-size:0.5em; margin-left:1px;">{{ stat.suffix }}</span>
-              </div>
-              <p style="margin:12px 0 0; font-size:12.5px; line-height:1.45; color:rgba(241,241,231,0.6);">{{ stat.label }}</p>
+
+        <div data-reveal style="position:relative; opacity:1;">
+          <div style="font-weight:800; font-size:92px; line-height:0.84; letter-spacing:-0.045em; display:flex; align-items:baseline;">
+            <span data-count="{{ heroStat.value }}">0</span><span style="font-size:0.42em; margin-left:0.02em;">{{ heroStat.suffix }}</span>
+          </div>
+          <p style="margin:14px 0 0; font-size:15px; line-height:1.45; color:{{ bandMuted }}; max-width:26ch;">{{ heroStat.label }}</p>
+        </div>
+        <div style="position:relative; margin-top:26px;">
+          <sc-for list="{{ restStats }}" as="stat" hint-placeholder-count="3">
+            <div data-reveal style="opacity:1; display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:14px 0; border-top:1px solid {{ bandRule }};">
+              <span style="font-family:'Space Mono',monospace; font-size:11.5px; letter-spacing:0.02em; color:{{ bandSubtle }}; line-height:1.45;">{{ stat.label }}</span>
+              <span style="font-weight:700; font-size:28px; line-height:1; letter-spacing:-0.025em; white-space:nowrap;"><span data-count="{{ stat.value }}">0</span><span style="font-size:0.55em;">{{ stat.suffix }}</span></span>
             </div>
           </sc-for>
         </div>
       </section>
 
       <!-- SERVICES -->
-      <section id="services" style="padding:48px 20px 40px;">
+      <section id="services" style="padding:48px 20px 34px;">
         <div data-reveal style="opacity:1; margin-bottom:28px;">
-          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.45);">/ What we do</span>
-          <h2 style="margin:12px 0 0; font-weight:700; font-size:34px; line-height:1.0; letter-spacing:-0.03em;">Three things, done <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">obsessively</span> well.</h2>
+          <span data-tick style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:{{ fgSubtle }};">{{ servicesKicker }}</span>
+          <h2 style="margin:12px 0 0; font-weight:700; font-size:34px; line-height:1.0; letter-spacing:-0.03em;">{{ servicesHeadA }}<span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">{{ servicesHeadItalic }}</span>{{ servicesHeadB }}</h2>
         </div>
-        <div style="border-top:1px solid rgba(17,17,16,0.14);">
+        <div style="border-top:1px solid {{ rule }};">
           <sc-for list="{{ services }}" as="svc" hint-placeholder-count="3">
-            <div data-reveal style="opacity:1; padding:26px 0; border-bottom:1px solid rgba(17,17,16,0.14);">
+            <div data-reveal style="opacity:1; padding:26px 0; border-bottom:1px solid {{ rule }};">
               <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;">
                 <div style="display:flex; align-items:baseline; gap:12px;">
-                  <span style="font-family:'Space Mono',monospace; font-size:12px; color:rgba(17,17,16,0.4);">{{ svc.no }}</span>
+                  <span style="font-family:'Space Mono',monospace; font-size:12px; color:{{ fgSubtle }};">{{ svc.no }}</span>
                   <h3 style="margin:0; font-weight:700; font-size:24px; letter-spacing:-0.02em; line-height:1.05;">{{ svc.title }}</h3>
                 </div>
-                <span style="font-family:'Space Mono',monospace; font-size:18px; color:#111110;">↗</span>
+                <span style="font-family:'Space Mono',monospace; font-size:18px; color:{{ fg }};">↗</span>
               </div>
-              <p style="margin:14px 0 16px; font-size:14.5px; line-height:1.55; color:rgba(17,17,16,0.66);">{{ svc.desc }}</p>
+              <p style="margin:14px 0 16px; font-size:14.5px; line-height:1.55; color:{{ fgMuted }};">{{ svc.desc }}</p>
               <div style="display:flex; flex-wrap:wrap; gap:7px;">
                 <sc-for list="{{ svc.tags }}" as="tag" hint-placeholder-count="3">
-                  <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.02em; color:rgba(17,17,16,0.6); border:1px solid rgba(17,17,16,0.16); padding:5px 10px; border-radius:999px;">{{ tag }}</span>
+                  <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.02em; color:{{ fgMuted }}; border:1px solid {{ rule }}; padding:5px 10px; border-radius:999px;">{{ tag }}</span>
                 </sc-for>
               </div>
             </div>
@@ -131,71 +173,65 @@
         </div>
       </section>
 
+      <!-- STATEMENT MARQUEE BAND -->
+      <div style="position:relative; background:{{ darkBg }}; transition:background .9s ease; color:{{ bandFg }}; padding:16px 0; overflow:hidden;">
+        <div style="position:absolute; inset:0; pointer-events:none; background:radial-gradient(80% 130% at 50% 50%, transparent 40%, rgba(0,0,0,0.18));"></div>
+        <div data-marquee="band" style="display:flex; align-items:center; gap:26px; width:max-content; white-space:nowrap; animation:gs-marq 30s linear infinite; position:relative;">
+          <sc-for list="{{ bandLoop }}" as="word" hint-placeholder-count="8">
+            <span style="display:flex; align-items:center; gap:26px;">
+              <span style="font-weight:{{ word.weight }}; font-family:{{ word.face }}; font-style:{{ word.italic }}; font-size:30px; letter-spacing:-0.02em;">{{ word.t }}</span>
+              <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="filter:{{ bandWm }}; height:0.6em; width:auto; opacity:0.65;" />
+            </span>
+          </sc-for>
+        </div>
+      </div>
+
       <!-- APPROACH -->
-      <section id="approach" style="padding:48px 20px; background:#ececde;">
+      <section id="approach" style="padding:44px 20px; background:{{ panelBg }}; transition:background .9s ease;">
         <div data-reveal style="opacity:1; margin-bottom:32px;">
-          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.45);">/ Why we exist</span>
-          <p style="margin:14px 0 0; font-weight:700; font-size:30px; line-height:1.06; letter-spacing:-0.03em;">Traditional agencies optimize for output. <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">We optimize for you.</span></p>
+          <span data-tick style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:{{ fgSubtle }};">/ Why we exist</span>
+          <p style="margin:14px 0 0; font-weight:700; font-size:30px; line-height:1.06; letter-spacing:-0.03em;">{{ approachHeadA }} <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">{{ approachHeadItalic }}</span></p>
         </div>
         <div style="display:flex; flex-direction:column; gap:26px;">
           <sc-for list="{{ principles }}" as="p" hint-placeholder-count="3">
-            <div data-reveal style="opacity:1; border-top:1px solid rgba(17,17,16,0.2); padding-top:18px;">
-              <span style="font-family:'Space Mono',monospace; font-size:12px; color:rgba(17,17,16,0.4);">{{ p.no }}</span>
+            <div data-reveal style="opacity:1; border-top:1px solid {{ ruleStrong }}; padding-top:18px;">
+              <span style="font-family:'Space Mono',monospace; font-size:12px; color:{{ fgSubtle }};">{{ p.no }}</span>
               <h3 style="margin:10px 0 8px; font-weight:700; font-size:21px; letter-spacing:-0.02em;">{{ p.title }}</h3>
-              <p style="margin:0; font-size:14.5px; line-height:1.55; color:rgba(17,17,16,0.66);">{{ p.body }}</p>
+              <p style="margin:0; font-size:14.5px; line-height:1.55; color:{{ fgMuted }};">{{ p.body }}</p>
             </div>
           </sc-for>
         </div>
       </section>
 
-      <!-- TESTIMONIALS -->
-      <section id="voices" style="padding:48px 0;">
-        <div data-reveal style="opacity:1; padding:0 20px; margin-bottom:22px; display:flex; align-items:center; justify-content:space-between;">
-          <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(17,17,16,0.45);">/ In their words</span>
-          <span style="font-family:'Space Mono',monospace; font-size:10.5px; color:rgba(17,17,16,0.35);">swipe →</span>
-        </div>
-        <div class="gs-scroll" style="display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding:0 20px 4px;">
-          <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="3">
-            <figure style="scroll-snap-align:start; flex:0 0 auto; width:290px; margin:0; background:#fbfbf5; border:1px solid rgba(17,17,16,0.1); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:space-between; min-height:250px;">
-              <blockquote style="margin:0; font-family:'Newsreader',Georgia,serif; font-size:21px; line-height:1.32; letter-spacing:-0.01em; color:#111110;">“{{ t.quote }}”</blockquote>
-              <figcaption style="margin-top:22px; display:flex; align-items:center; gap:11px;">
-                <span style="width:38px; height:38px; border-radius:50%; background:repeating-linear-gradient(135deg,#e6e6da 0 6px,#efefe6 6px 12px); border:1px solid rgba(17,17,16,0.1); flex:0 0 auto;"></span>
-                <div>
-                  <div style="font-weight:600; font-size:14px;">{{ t.name }}</div>
-                  <div style="font-family:'Space Mono',monospace; font-size:11px; color:rgba(17,17,16,0.5); margin-top:2px;">{{ t.role }}</div>
-                </div>
-              </figcaption>
-            </figure>
-          </sc-for>
-        </div>
-      </section>
-
       <!-- FINAL CTA -->
-      <section id="book" style="background:#143828; color:#f1f1e7; padding:56px 20px;">
-        <div data-reveal style="opacity:1; text-align:center;">
-          <span style="display:inline-block; font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(241,241,231,0.5); margin-bottom:20px;">/ Let's talk</span>
-          <h2 style="margin:0; font-weight:800; font-size:46px; line-height:0.98; letter-spacing:-0.035em;">Content that <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">performs.</span></h2>
+      <section id="book" style="position:relative; overflow:hidden; background:{{ darkBg }}; transition:background .9s ease; color:{{ bandFg }}; padding:56px 20px;">
+        <div style="position:absolute; inset:0; pointer-events:none; background:radial-gradient(70% 80% at 50% 0%, {{ bandGlow }}, transparent 60%);"></div>
+        <img src="assets/logo-cream.png" alt="" aria-hidden="true" style="filter:{{ bandWm }}; position:absolute; left:50%; top:52%; transform:translate(-50%,-50%); width:300px; opacity:0.05; pointer-events:none;" />
+        <div data-reveal style="position:relative; opacity:1; text-align:center;">
+          <span data-tick style="display:inline-block; font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:{{ bandSubtle }}; margin-bottom:20px;">{{ ctaKicker }}</span>
+          <h2 style="margin:0; font-weight:800; font-size:46px; line-height:0.98; letter-spacing:-0.035em;">{{ ctaHeadA }} <span style="font-family:'Newsreader',Georgia,serif; font-style:italic; font-weight:500;">{{ ctaHeadItalic }}</span></h2>
           <div style="margin-top:30px; display:flex; flex-direction:column; gap:14px; align-items:center;">
-            <a href="#book" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:#f1f1e7; color:#111110; font-weight:600; font-size:16px; padding:16px; border-radius:14px;">Book a call <span style="font-family:'Space Mono',monospace;">→</span></a>
-            <a href="mailto:hello@growthsocial.co" style="text-decoration:none; color:rgba(241,241,231,0.85); font-family:'Space Mono',monospace; font-size:13px; border-bottom:1px solid rgba(241,241,231,0.3); padding-bottom:3px;">hello@growthsocial.co</a>
+            <a href="{{ heroCtaHref }}" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:{{ bandBtnBg }}; color:{{ bandBtnFg }}; font-weight:600; font-size:16px; padding:16px; border-radius:14px;">{{ heroCta }} <span style="font-family:'Space Mono',monospace;">→</span></a>
+            <a href="mailto:contact@growthsocialhq.com" style="text-decoration:none; color:{{ bandMuted }}; font-family:'Space Mono',monospace; font-size:13px; border-bottom:1px solid {{ bandRule }}; padding-bottom:3px;">contact@growthsocialhq.com</a>
           </div>
         </div>
       </section>
 
       <!-- FOOTER -->
       <footer style="padding:32px 20px 40px;">
-        <div style="display:flex; align-items:center; gap:9px; padding-bottom:20px; border-bottom:1px solid rgba(17,17,16,0.12);">
-          <img src="assets/logo-green.png" alt="Growth Social" style="height:24px; width:auto; display:block;" />
+        <div style="display:flex; align-items:center; gap:9px; padding-bottom:20px; border-bottom:1px solid {{ rule }};">
+          <sc-if value="{{ isBrand }}" hint-placeholder-val="{{ true }}"><img src="assets/logo-green.png" alt="Growth Social" style="height:24px; width:auto; display:block;" /></sc-if>
+          <sc-if value="{{ isCreator }}" hint-placeholder-val="{{ false }}"><img src="assets/logo-cream.png" alt="Growth Social" style="height:24px; width:auto; display:block;" /></sc-if>
           <span style="font-weight:700; font-size:16px; letter-spacing:-0.02em;">Growth Social</span>
         </div>
         <div style="display:flex; flex-wrap:wrap; gap:18px 24px; margin-top:20px;">
-          <a href="#services" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:13.5px; font-weight:500;">Services</a>
-          <a href="#results" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:13.5px; font-weight:500;">Results</a>
-          <a href="#approach" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:13.5px; font-weight:500;">Approach</a>
-          <a href="#voices" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:13.5px; font-weight:500;">Clients</a>
-          <a href="Creator%20Academy.dc.html" style="text-decoration:none; color:rgba(17,17,16,0.6); font-size:13.5px; font-weight:500;">Creator login</a>
+          <a href="#services" style="text-decoration:none; color:{{ fgMuted }}; font-size:13.5px; font-weight:500;">Services</a>
+          <a href="#results" style="text-decoration:none; color:{{ fgMuted }}; font-size:13.5px; font-weight:500;">Results</a>
+          <a href="#approach" style="text-decoration:none; color:{{ fgMuted }}; font-size:13.5px; font-weight:500;">Approach</a>
+          <a href="{{ heroCtaHref }}" style="text-decoration:none; color:{{ fgMuted }}; font-size:13.5px; font-weight:500;">{{ heroCta }}</a>
+          <a href="Creator%20Academy%20Mobile.dc.html" style="text-decoration:none; color:{{ fgMuted }}; font-size:13.5px; font-weight:500;">Creator login</a>
         </div>
-        <div style="margin-top:24px; font-family:'Space Mono',monospace; font-size:11px; color:rgba(17,17,16,0.42); line-height:1.7;">
+        <div style="margin-top:24px; font-family:'Space Mono',monospace; font-size:11px; color:{{ fgFaint }}; line-height:1.7;">
           <div>© 2026 Growth Social</div>
           <div>Creators first. Outcomes always.</div>
         </div>
@@ -207,17 +243,65 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:940},&quot;reduceMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;marqueeSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:40,&quot;min&quot;:16,&quot;max&quot;:80,&quot;step&quot;:2,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;showBrandRow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
 class Component extends DCLogic {
+  state = { mode: 'brand' };
+
+  setMode(mode) {
+    if (this.state.mode === mode) return;
+    this.setState({ mode }, () => {
+      const root = this.rootEl || document;
+      this.syncThumb();
+      root.querySelectorAll('[data-count]').forEach((el) => { el.textContent = '0'; this.animateCount(el); });
+      root.querySelectorAll('[data-anim="word"]').forEach((el) => {
+        const d = parseFloat(el.getAttribute('data-delay') || '0');
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = 'gs-word .8s cubic-bezier(.16,1,.3,1) ' + d * 0.5 + 'ms both';
+      });
+    });
+  }
+
+  // Thumb geometry is measured, never hardcoded — the two labels are
+  // different widths and the font loads late.
+  syncThumb() {
+    const thumb = this._thumb;
+    const btn = this.state.mode === 'creator' ? this._creatorBtn : this._brandBtn;
+    if (!thumb || !btn || !btn.offsetWidth) return;
+    thumb.style.width = btn.offsetWidth + 'px';
+    thumb.style.transform = 'translateX(' + btn.offsetLeft + 'px)';
+  }
+
+  words(line, base) {
+    return String(line || '').split(' ').map((t, i) => ({ t, delay: base + i * 60 }));
+  }
+
+  // Mutates the existing text node in place — replacing textContent would
+  // detach the node React tracks and freeze future updates to that element.
+  tickIn(el) {
+    const node = el.firstChild;
+    if (!node || node.nodeType !== 3) return;
+    const full = node.nodeValue;
+    if (!full) return;
+    const chars = Array.from(full);
+    let i = 0;
+    node.nodeValue = '';
+    const tick = () => {
+      if (node.nodeValue === full) return;
+      i += 1;
+      node.nodeValue = chars.slice(0, i).join('');
+      if (i < chars.length) this._tickTimers.push(setTimeout(tick, 26));
+    };
+    tick();
+    this._tickTimers.push(setTimeout(() => { if (node.nodeValue !== full) node.nodeValue = full; }, chars.length * 26 + 500));
+  }
+
   renderVals() {
     const brands = ['Meta', 'Cluely', 'Lovable', 'SharkNinja', 'Based Bodyworks', 'Anker', 'Govee', 'Levoit', 'QVC', 'PacSun', 'Midjourney', 'Polymarket', 'BISSELL', 'Dave\u2019s Hot Chicken', 'Crocs'];
     const clips = [
-      { id: 'REEL 01', label: 'skincare hook' },
-      { id: 'REEL 02', label: 'unboxing' },
-      { id: 'REEL 03', label: 'testimonial' },
-      { id: 'REEL 04', label: 'day-in-life' },
-      { id: 'REEL 05', label: 'demo' },
-      { id: 'REEL 06', label: 'founder story' },
-      { id: 'REEL 07', label: 'before/after' },
-      { id: 'REEL 08', label: 'street interview' },
+      { id: 'REEL 01', views: '2.3M' }, { id: 'REEL 02', views: '17.9M' },
+      { id: 'REEL 03', views: '3.4M' }, { id: 'REEL 04', views: '500K' },
+      { id: 'REEL 05', views: '1.4M' }, { id: 'REEL 06', views: '450K' },
+      { id: 'REEL 07', views: '8.5M' }, { id: 'REEL 08', views: '1M' },
+      { id: 'REEL 09', views: '620K' },
     ];
     const stats = [
       { value: '3.4', suffix: 'x', label: 'Avg. conversion lift on paid social' },
@@ -225,33 +309,131 @@ class Component extends DCLogic {
       { value: '12', suffix: 'M+', label: 'Monthly views driven for clients' },
       { value: '48', suffix: 'hr', label: 'Avg. concept-to-first-cut' },
     ];
+    const creatorStats = [
+      { value: '150', suffix: '+', label: 'Creators earning with us right now' },
+      { value: '7', suffix: 'd', label: 'Application to first paid brief' },
+      { value: '20', suffix: '+', label: 'Academy lessons, free once you\u2019re in' },
+      { value: '2', suffix: 'x', label: 'Avg. rate increase in year one' },
+    ];
     const services = [
       { no: '01', title: 'UGC Creation', desc: 'Scroll-stopping, platform-native content made by creators who actually use your product — briefed against your funnel, not vanity metrics.', tags: ['Short-form video', 'Photo', 'Scripting'] },
       { no: '02', title: 'Creator Coaching', desc: 'We develop our creators like athletes: performance reviews, shared hook libraries and tight iteration loops so every batch beats the last.', tags: ['Reviews', 'Hook libraries', 'Iteration'] },
       { no: '03', title: 'Performance Scaling', desc: 'Winning concepts get systematized and scaled across placements and markets, with results feeding straight back into the next brief.', tags: ['Creative testing', 'Scaling', 'Reporting'] },
+    ];
+    const creatorServices = [
+      { no: '01', title: 'Apply & get vetted', desc: 'Send us your handle and a couple of clips. No follower minimums — we care how you shoot, talk and take direction.', tags: ['No follower minimum', '48hr response', 'Portfolio review'] },
+      { no: '02', title: 'Get coached', desc: 'Full access to the Creator Academy: hooks, filming, editing, portfolio and client-landing modules, plus intro sessions with Noel and Joey.', tags: ['Creator Academy', 'Hook libraries', '1:1 feedback'] },
+      { no: '03', title: 'Get paid to post', desc: 'We match you to briefs from real brands, handle the contracts and invoicing, and pay a flat rate per approved video.', tags: ['Flat rate per video', 'Repeat clients', 'We handle contracts'] },
     ];
     const principles = [
       { no: '01', title: 'Creators, not vendors', body: 'We pay well, coach hard and build long-term relationships. Better-treated creators make better-performing content.' },
       { no: '02', title: 'Outcomes, not deliverables', body: 'We measure ourselves on your CAC, ROAS and retention — never a quota of clips nobody watches.' },
       { no: '03', title: 'Systems, not guesswork', body: 'Every winning hook feeds a library and a testing framework, so performance compounds over time.' },
     ];
-    const testimonials = [
-      { quote: 'They treat our creative like a product — every batch is measurably better than the last.', name: 'Maya Ellison', role: 'Head of Growth, Superbloom' },
-      { quote: 'Finally an agency that reports on revenue, not view counts. A real extension of our team.', name: 'Devon Carter', role: 'Founder, Northwind' },
-      { quote: 'The creators actually understand our product. The content converts like our customers wrote it.', name: 'Priya Nair', role: 'VP Marketing, Aéra' },
+    const creatorPrinciples = [
+      { no: '01', title: 'Paid properly, on time', body: 'Flat rates agreed up front and paid on schedule — no chasing invoices, no commission-only roulette.' },
+      { no: '02', title: 'Coached, not just booked', body: 'You get reviews, hook libraries and real feedback after every batch. You should be a better creator six months in.' },
+      { no: '03', title: 'Long-term, not one-off', body: 'We build repeat relationships with brands so our creators get steady work instead of scrambling for the next gig.' },
     ];
+
+    const isBrand = this.state.mode !== 'creator';
+    const copy = isBrand ? {
+      heroKicker: 'UGC Agency',
+      heroLine1: 'Creator\u2011focused.', heroLine2: 'Outcome\u2011obsessed.', heroLine3: 'Against the grain.',
+      heroBody: 'A UGC agency built around the people who make the content — and the results our clients actually care about.',
+      heroCta: 'Book a call', heroCtaHref: '#book', heroAlt: 'See the work', heroAltHref: '#services',
+      navCta: 'Book a call', navCtaHref: '#book', statusLabel: 'Now booking',
+      proofLabel: 'Trusted by brands of every size',
+      resultsHeading: 'Content that earns its place in the ad account.',
+      servicesKicker: '/ What we do',
+      servicesHeadA: 'Three things, done ', servicesHeadItalic: 'obsessively', servicesHeadB: ' well.',
+      approachHeadA: 'Traditional agencies optimize for output.', approachHeadItalic: 'We optimize for you.',
+      ctaKicker: '/ Let\u2019s talk', ctaHeadA: 'Content that', ctaHeadItalic: 'performs.',
+      stats, services, principles,
+    } : {
+      heroKicker: 'For creators',
+      heroLine1: 'Get paid to post.', heroLine2: 'Get coached to win.', heroLine3: 'Grow on purpose.',
+      heroBody: 'Flat rates per approved video, briefs from real brands, and a full Academy behind you. We treat creators like a roster, not a headcount.',
+      heroCta: 'Apply to create', heroCtaHref: 'https://apply.growthsocialhq.com', heroAlt: 'Log into the portal', heroAltHref: 'Creator%20Academy%20Mobile.dc.html',
+      navCta: 'Log in', navCtaHref: 'Creator%20Academy%20Mobile.dc.html', statusLabel: 'Applications open',
+      proofLabel: 'Brands our creators have shot for',
+      resultsHeading: 'A roster that gets better every single month.',
+      servicesKicker: '/ How it works',
+      servicesHeadA: 'Three steps, no ', servicesHeadItalic: 'gatekeeping', servicesHeadB: '.',
+      approachHeadA: 'Most agencies treat creators as headcount.', approachHeadItalic: 'We treat you as the roster.',
+      ctaKicker: '/ Join the roster', ctaHeadA: 'Creators who', ctaHeadItalic: 'get booked.',
+      stats: creatorStats, services: creatorServices, principles: creatorPrinciples,
+    };
+
+    const bandWords = [
+      { t: 'Creator\u2011first', weight: '700', face: 'inherit', italic: 'normal' },
+      { t: 'Outcome\u2011driven', weight: '500', face: "'Newsreader',Georgia,serif", italic: 'italic' },
+      { t: 'Coached like a team', weight: '700', face: 'inherit', italic: 'normal' },
+      { t: 'Against the grain', weight: '500', face: "'Newsreader',Georgia,serif", italic: 'italic' },
+    ];
+
     return {
       setRoot: (el) => { this.rootEl = el; },
+      setThumb: (el) => { this._thumb = el; this.syncThumb(); },
+      setBrandBtn: (el) => { this._brandBtn = el; this.syncThumb(); },
+      setCreatorBtn: (el) => { this._creatorBtn = el; this.syncThumb(); },
+      isBrand,
+      isCreator: !isBrand,
+      pickBrand: () => this.setMode('brand'),
+      pickCreator: () => this.setMode('creator'),
+      heroWords1: this.words(copy.heroLine1, 0),
+      heroWords2: this.words(copy.heroLine2, 110),
+      heroWords3: this.words(copy.heroLine3, 220),
+      thumbBg: isBrand ? '#143828' : '#f1f1e7',
+      brandTint: isBrand ? '#f1f1e7' : 'rgba(241,241,231,0.7)',
+      creatorTint: isBrand ? 'rgba(17,17,16,0.62)' : '#111110',
+      // Creator side is the palette inverted: green page, cream blocks.
+      pageWash: isBrand
+        ? 'radial-gradient(130% 70% at 50% 0%, #f6f6ee 0%, #f1f1e7 46%, #eaeadd 100%)'
+        : 'radial-gradient(130% 70% at 50% 0%, #1a4633 0%, #143828 46%, #0f2c1f 100%)',
+      fg: isBrand ? '#111110' : '#f1f1e7',
+      fgMuted: isBrand ? 'rgba(17,17,16,0.66)' : 'rgba(241,241,231,0.7)',
+      fgSubtle: isBrand ? 'rgba(17,17,16,0.46)' : 'rgba(241,241,231,0.5)',
+      fgFaint: isBrand ? 'rgba(17,17,16,0.34)' : 'rgba(241,241,231,0.32)',
+      rule: isBrand ? 'rgba(17,17,16,0.13)' : 'rgba(241,241,231,0.16)',
+      ruleStrong: isBrand ? 'rgba(17,17,16,0.26)' : 'rgba(241,241,231,0.3)',
+      chipBg: isBrand ? 'rgba(251,251,245,0.8)' : 'rgba(15,44,31,0.72)',
+      dotBg: isBrand ? '#143828' : '#f1f1e7',
+      btnBg: isBrand ? '#143828' : '#f1f1e7',
+      btnFg: isBrand ? '#f1f1e7' : '#111110',
+      darkBg: isBrand ? '#143828' : '#f1f1e7',
+      bandFg: isBrand ? '#f1f1e7' : '#111110',
+      bandMuted: isBrand ? 'rgba(241,241,231,0.68)' : 'rgba(17,17,16,0.66)',
+      bandSubtle: isBrand ? 'rgba(241,241,231,0.5)' : 'rgba(17,17,16,0.46)',
+      bandRule: isBrand ? 'rgba(241,241,231,0.16)' : 'rgba(17,17,16,0.14)',
+      bandGlow: isBrand ? 'rgba(241,241,231,0.10)' : 'rgba(17,17,16,0.05)',
+      bandBtnBg: isBrand ? '#f1f1e7' : '#143828',
+      bandBtnFg: isBrand ? '#111110' : '#f1f1e7',
+      panelBg: isBrand ? '#ececde' : '#0f2c1f',
+      reelBg: isBrand
+        ? 'repeating-linear-gradient(135deg,#e8e8dc 0 10px,#eeeee4 10px 20px)'
+        : 'repeating-linear-gradient(135deg,#17402e 0 10px,#1c4a35 10px 20px)',
+      // One literal image per watermark; tone flips with a filter so no
+      // templated src is ever fetched as a URL.
+      heroWm: isBrand ? 'none' : 'invert(1)',
+      bandWm: isBrand ? 'none' : 'invert(1)',
       showBrandRow: this.props.showBrandRow ?? true,
       brandsLoop: brands.concat(brands),
       clipsLoop: clips.concat(clips),
-      stats, services, principles, testimonials,
+      bandLoop: bandWords.concat(bandWords),
+      heroStat: copy.stats[0],
+      restStats: copy.stats.slice(1),
+      ...copy,
     };
   }
 
   componentDidMount() {
     // Content lives inside an async-loaded <x-import IOSDevice>, so the
     // [data-reveal]/[data-count] elements may not exist yet. Retry until they do.
+    this._tickTimers = [];
+    this.syncThumb();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => this.syncThumb());
+    this._thumbTimers = [80, 400, 1200].map((t) => setTimeout(() => this.syncThumb(), t));
     let tries = 0;
     this._setupTimer = setInterval(() => {
       tries += 1;
@@ -272,6 +454,7 @@ class Component extends DCLogic {
     const reveals = root.querySelectorAll('[data-reveal]');
     const counters = root.querySelectorAll('[data-count]');
     const marquees = root.querySelectorAll('[data-marquee]');
+    const ticks = root.querySelectorAll('[data-tick]');
 
     marquees.forEach((m) => {
       if (reduce) { m.style.animation = 'none'; }
@@ -284,7 +467,9 @@ class Component extends DCLogic {
           if (e.isIntersecting) {
             const el = e.target;
             const d = parseFloat(el.getAttribute('data-delay') || '0');
-            el.style.animation = 'gs-rise .8s cubic-bezier(.16,1,.3,1) ' + d + 'ms both';
+            el.style.animation = el.getAttribute('data-anim') === 'word'
+              ? 'gs-word .8s cubic-bezier(.16,1,.3,1) ' + d + 'ms both'
+              : 'gs-rise .8s cubic-bezier(.16,1,.3,1) ' + d + 'ms both';
             io.unobserve(el);
           }
         });
@@ -297,6 +482,13 @@ class Component extends DCLogic {
         });
       }, { threshold: 0.4 });
       counters.forEach((el) => cio.observe(el));
+
+      const tio = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { this.tickIn(e.target); tio.unobserve(e.target); }
+        });
+      }, { threshold: 0.6 });
+      ticks.forEach((el) => tio.observe(el));
     } else {
       counters.forEach((el) => { el.textContent = el.getAttribute('data-count'); });
     }
@@ -312,6 +504,8 @@ class Component extends DCLogic {
   componentWillUnmount() {
     if (this._numFallback) clearTimeout(this._numFallback);
     if (this._setupTimer) clearInterval(this._setupTimer);
+    (this._tickTimers || []).forEach(clearTimeout);
+    (this._thumbTimers || []).forEach(clearTimeout);
   }
 
   animateCount(el) {

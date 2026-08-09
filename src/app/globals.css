@@ -30,7 +30,146 @@ body {
   color: var(--color-ink);
 }
 
+/* ---------------------------------------------------------------------------
+   Audience modes (brand / creator)
+   ---------------------------------------------------------------------------
+   The creator side is the same brand palette with its roles inverted: the page
+   goes green, the big blocks go cream. Nothing new is introduced.
+
+   These live as custom properties on [data-mode] rather than as inline styles
+   so the switch is a pure CSS transition — no re-render, no flash, and the
+   1.1s wash / 0.9s block cross-fade come for free. Components reference the
+   vars; only copy and content come from React state.
+--------------------------------------------------------------------------- */
+[data-mode] {
+  /* Page + foreground */
+  --page-wash: radial-gradient(135% 95% at 50% -12%, #f6f6ee 0%, #f1f1e7 44%, #eaeadd 100%);
+  --fg: #111110;
+  --fg-muted: rgba(17, 17, 16, 0.66);
+  --fg-subtle: rgba(17, 17, 16, 0.46);
+  --fg-faint: rgba(17, 17, 16, 0.34);
+  --rule: rgba(17, 17, 16, 0.13);
+  --rule-strong: rgba(17, 17, 16, 0.26);
+
+  /* Big blocks: stats, statement band, final CTA */
+  --band-bg: #143828;
+  --band-fg: #f1f1e7;
+  --band-muted: rgba(241, 241, 231, 0.68);
+  --band-subtle: rgba(241, 241, 231, 0.5);
+  --band-rule: rgba(241, 241, 231, 0.16);
+  --band-glow: rgba(241, 241, 231, 0.09);
+  --band-btn-bg: #f1f1e7;
+  --band-btn-fg: #111110;
+
+  /* Surfaces + chrome */
+  --panel-bg: #ececde;
+  --chip-bg: rgba(251, 251, 245, 0.8);
+  --nav-hover: rgba(20, 56, 40, 0.08);
+  --nav-scrolled: rgba(241, 241, 231, 0.82);
+  --reel-bg: repeating-linear-gradient(135deg, #e8e8dc 0 11px, #eeeee4 11px 22px);
+
+  /* Primary button (page-level, not on a band) */
+  --btn-bg: #143828;
+  --btn-fg: #f1f1e7;
+  --btn-bg-hover: #0f2c1f;
+
+  /* One literal watermark image, tone-flipped per mode rather than swapping
+     src — avoids a second network fetch and any flash mid-switch. */
+  --watermark-filter: none;
+}
+
+[data-mode="creator"] {
+  --page-wash: radial-gradient(135% 95% at 50% -12%, #1a4633 0%, #143828 46%, #0f2c1f 100%);
+  --fg: #f1f1e7;
+  --fg-muted: rgba(241, 241, 231, 0.7);
+  --fg-subtle: rgba(241, 241, 231, 0.5);
+  --fg-faint: rgba(241, 241, 231, 0.32);
+  --rule: rgba(241, 241, 231, 0.16);
+  --rule-strong: rgba(241, 241, 231, 0.3);
+
+  --band-bg: #f1f1e7;
+  --band-fg: #111110;
+  --band-muted: rgba(17, 17, 16, 0.66);
+  --band-subtle: rgba(17, 17, 16, 0.46);
+  --band-rule: rgba(17, 17, 16, 0.14);
+  --band-glow: rgba(17, 17, 16, 0.05);
+  --band-btn-bg: #143828;
+  --band-btn-fg: #f1f1e7;
+
+  --panel-bg: #0f2c1f;
+  --chip-bg: rgba(15, 44, 31, 0.72);
+  --nav-hover: rgba(241, 241, 231, 0.12);
+  --nav-scrolled: rgba(17, 50, 35, 0.86);
+  --reel-bg: repeating-linear-gradient(135deg, #17402e 0 11px, #1c4a35 11px 22px);
+
+  --btn-bg: #f1f1e7;
+  --btn-fg: #111110;
+  --btn-bg-hover: #e4e4d6;
+
+  --watermark-filter: invert(1);
+}
+
+/* The deliberate-feeling part of the switch. Scoped to colour/background so
+   it never interferes with layout or transform animations elsewhere. */
+[data-mode] body,
+body[data-mode] {
+  transition: background 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mode-band {
+  transition:
+    background-color 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mode-fade {
+  transition: color 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-mode] body,
+  body[data-mode],
+  .mode-band,
+  .mode-fade {
+    transition: none;
+  }
+}
+
 ::selection {
   background: #111110;
   color: #f1f1e7;
+}
+
+/* Hero headline: each word rises out of its clipping mask. Declared as a
+   keyframe rather than driven from JS so a dropped frame can't strand a word
+   mid-travel — the browser always lands it. */
+@keyframes gs-word-rise {
+  from {
+    transform: translateY(105%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Status chip dot. */
+@keyframes gs-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.82);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="gs-word-rise"],
+  .gs-pulse-dot {
+    animation: none !important;
+  }
 }
