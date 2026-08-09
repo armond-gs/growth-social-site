@@ -78,7 +78,10 @@ export function FinalCta() {
           </Link>
         </Reveal>
 
-        <BookingReveal />
+        {/* Brand only. Creators apply rather than book a call, so the panel
+            isn't mounted in creator mode at all — that also means a /#book
+            deep link can't expand it behind the wrong audience. */}
+        {copy.heroCtaOpensBooking && <BookingReveal />}
       </div>
     </section>
   );
