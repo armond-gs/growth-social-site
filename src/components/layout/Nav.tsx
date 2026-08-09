@@ -58,10 +58,11 @@ export function Nav() {
     "inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[var(--btn-bg)] px-4 py-[9px] text-[13px] font-semibold whitespace-nowrap text-[var(--btn-fg)] no-underline transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_16px_30px_-14px_rgba(20,56,40,0.7)] md:px-5 md:py-[11px] md:text-[14.5px]";
 
   return (
-    // Static on mobile so the bar scrolls away and the toggle sits directly
-    // beneath it; fixed from md up.
+    // Fixed at every width. The handoff specified a static bar on mobile,
+    // but scrolling away takes the CTA and the audience toggle's context with
+    // it — the nav is the only persistent way back to booking.
     <nav
-      className="relative z-50 flex items-center justify-between border-b px-[clamp(20px,5vw,48px)] py-4 backdrop-saturate-150 backdrop-blur-[10px] transition-colors duration-300 md:fixed md:inset-x-0 md:top-0"
+      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b px-[clamp(20px,5vw,48px)] py-4 backdrop-saturate-150 backdrop-blur-[10px] transition-colors duration-300"
       style={{
         // Only the background responds to scroll — the hairline is always
         // there, so the bar reads as a bar even at the top of the page.
