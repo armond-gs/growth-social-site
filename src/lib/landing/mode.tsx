@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import { LANDING_COPY, type AudienceMode, type LandingCopy } from "@/lib/data/landing";
 
 type ModeContextValue = {
@@ -38,6 +46,16 @@ export function ModeProvider({ children }: { children: ReactNode }) {
       return next;
     });
   }, []);
+
+  // Mirrored onto <html> so the document background can follow the mode too.
+  // Without this, an overscroll bounce in creator mode reveals the cream body
+  // behind the green page. Cleaned up on unmount so other routes are unaffected.
+  useEffect(() => {
+    document.documentElement.dataset.mode = mode;
+    return () => {
+      delete document.documentElement.dataset.mode;
+    };
+  }, [mode]);
 
   const value = useMemo<ModeContextValue>(
     () => ({

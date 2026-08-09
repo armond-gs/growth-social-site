@@ -44,9 +44,16 @@ The sliding pill **must measure the active button** (`offsetWidth`/`offsetLeft`)
 
 ## Other changes from the deployed version
 
-- **Nav is three zones**: logo left, links (Services / Results / Approach) optically centered, status chip + CTA right. Links live in hover pills — background fades in (`rgba(20,56,40,0.08)` brand / `rgba(241,241,231,0.12)` creator), text goes to full color and **weight 700**.
-- **Status chip**: mono uppercase with a slowly pulsing dot (2.4s). "Now booking" (brand) / "Applications open" (creator).
-- **Hero eyebrow** is a full-width rule: kicker left, hairline gradient stretching across, "Est. 2026" right.
+### Header (fully specified — it changed the most)
+- **Fixed to the top**, three zones: **logo left**, **links absolutely centered** on the page (`left:50%; transform:translateX(-50%)`) — not part of the right cluster — and **status chip + CTA right**. The old right-side stack of links+divider+login+button is gone; that's what made it look lopsided.
+- **Links are Services / Results / Approach only.** "Clients" was removed (its testimonials section no longer exists). "Creator login" is no longer a nav link — portal access is the creator-mode CTA.
+- **Border-bottom is always visible** at `rgba(17,17,16,0.1)` (cream mode) / `rgba(241,241,231,0.16)` (creator mode) — it does **not** fade in on scroll. Only the background does: transparent at top → `rgba(241,241,231,0.82)` (brand) / `rgba(17,50,35,0.86)` (creator) past 16px scroll, with backdrop blur.
+- **Link hover**: each link is a `999px` pill with `8px 15px` padding, `6px` gap between links. On hover the background fades in (`rgba(20,56,40,0.08)` brand / `rgba(241,241,231,0.12)` creator), text goes to full color **and weight 700**, all over `.25s`. Note the labels shift a hair as they bold — lock link widths if that matters.
+- **Status chip**: mono uppercase 11px, `0.09em` tracking, muted, preceded by a 6px dot pulsing on a 2.4s loop. No border, no divider bar. "Now booking" (brand) / "Applications open" (creator).
+- **Right CTA swaps by mode**: "Book a call" → booking flow (brand); "Log into portal" → Academy (creator).
+- **Hero top padding tightened** to `clamp(96px,11vh,124px)` (was ~190px) so the toggle sits close under the bar; the toggle's own bottom margin is `clamp(18px,2.4vw,26px)`.
+- **Mobile header** is the same content in a static (non-fixed) bar with a bottom hairline: logo + wordmark left, status chip + compact CTA right, toggle centered directly beneath.
+- **Hero eyebrow** (below the toggle) is a full-width rule: kicker left, hairline gradient stretching across, "Est. 2026" right.
 - **Faint logo watermark** behind the hero's top-right at 5% opacity. Ship one literal image and invert it with a CSS `filter` per mode rather than swapping `src`.
 - **Stats section restructured** — the 4-up equal grid is gone. One hero number at `clamp(96px,15vw,232px)` on the left with its label, and the remaining three as mono footnote rows (label left, value right) separated by hairlines. Mobile stacks: hero number, then the three rows.
 - **Testimonials section removed** entirely from both modes.

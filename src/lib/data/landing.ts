@@ -174,6 +174,9 @@ export type LandingCopy = {
   ctaHeadA: string;
   ctaHeadItalic: string;
   navCta: string;
+  navCtaHref: string;
+  /** Brand's nav CTA opens the inline booking panel; creator's navigates. */
+  navCtaOpensBooking: boolean;
   stats: Stat[];
   services: Service[];
   principles: Principle[];
@@ -251,6 +254,8 @@ export const LANDING_COPY: Record<AudienceMode, LandingCopy> = {
     ctaHeadA: "Content that",
     ctaHeadItalic: "performs.",
     navCta: "Book a call",
+    navCtaHref: "/book",
+    navCtaOpensBooking: true,
     stats: STATS,
     services: SERVICES,
     principles: PRINCIPLES,
@@ -279,7 +284,9 @@ export const LANDING_COPY: Record<AudienceMode, LandingCopy> = {
     ctaKicker: "/ Join the roster",
     ctaHeadA: "Creators who",
     ctaHeadItalic: "get booked.",
-    navCta: "Apply to create",
+    navCta: "Log into portal",
+    navCtaHref: "/academy",
+    navCtaOpensBooking: false,
     stats: CREATOR_STATS,
     services: CREATOR_SERVICES,
     principles: CREATOR_PRINCIPLES,

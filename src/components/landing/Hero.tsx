@@ -19,7 +19,7 @@ export function Hero() {
     "flex cursor-pointer items-center justify-center gap-2 rounded-[14px] bg-[var(--btn-bg)] px-6 py-4 font-semibold text-[var(--btn-fg)] no-underline transition-all duration-300 ease-out md:inline-flex md:w-auto md:rounded-full md:px-[26px] md:hover:-translate-y-0.5 md:hover:shadow-[0_16px_30px_-14px_rgba(20,56,40,0.7)]";
 
   return (
-    <header id="top" className="relative pt-[clamp(96px,13vh,140px)] pb-[clamp(48px,7vw,80px)]">
+    <header id="top" className="relative pt-[clamp(28px,4vw,40px)] pb-[clamp(48px,7vw,80px)] md:pt-[clamp(96px,11vh,124px)]">
       {/* Faint watermark. One literal image, tone-flipped per mode with a CSS
           filter rather than swapping src — no second fetch, no mid-switch flash. */}
       <Image
@@ -34,7 +34,7 @@ export function Hero() {
       />
 
       <div className={`relative ${CONTAINER}`}>
-        <div className="mb-[clamp(30px,5vw,52px)]">
+        <div className="mb-[clamp(18px,2.4vw,26px)]">
           <AudienceToggle />
         </div>
 
