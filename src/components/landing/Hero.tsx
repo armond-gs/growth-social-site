@@ -61,7 +61,13 @@ export function Hero() {
           </span>
         </Reveal>
 
-        <h1 className="m-0 max-w-[14ch] text-[41px] leading-[0.98] font-extrabold tracking-[-0.035em] md:text-[clamp(48px,9.2vw,132px)] md:leading-[0.92]">
+        {/* Both sizes deviate from the spec's fixed values, in both directions:
+            the desktop cap is raised from 132px because at 1240 the type froze
+            around a 1435px viewport and the hero read as small on a big
+            monitor; the mobile size is fluid rather than a fixed 41px because
+            "Creator-focused." is one unbreakable word that overflowed its own
+            box below ~320px. */}
+        <h1 className="m-0 max-w-[15ch] text-[clamp(26px,10.2vw,41px)] leading-[0.98] font-extrabold tracking-[-0.035em] md:text-[clamp(48px,9.2vw,152px)] md:leading-[0.92]">
           <span className="block">
             <WordRise text={copy.heroLine1} lineDelay={0} replayKey={`l1-${modeEpoch}`} />
           </span>
