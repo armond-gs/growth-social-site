@@ -2,33 +2,68 @@ import type { LessonRow } from "@/lib/academy/types";
 import { formatLessonDuration } from "@/lib/academy/types";
 import { PlaceholderMark } from "@/components/academy/PlaceholderMark";
 
-export function LessonCard({ lesson }: { lesson: LessonRow }) {
+function PlayBadge() {
+  return (
+    <span className="flex h-9.5 w-9.5 items-center justify-center rounded-full bg-green/92 md:h-11 md:w-11">
+      <svg width="12" height="14" viewBox="0 0 14 16" className="md:h-4 md:w-3.5">
+        <path d="M1 1l12 7-12 7z" fill="#f1f1e7" />
+      </svg>
+    </span>
+  );
+}
+
+export function LessonCard({ lesson, onOpen }: { lesson: LessonRow; onOpen?: () => void }) {
+  const playable = Boolean(lesson.videoUid);
+
+  const art = (
+    <>
+      {!lesson.thumbnailUrl && <PlaceholderMark tone="dark" />}
+      {/* No play affordance on a lesson that can't be played — a dead play
+          button reads as broken rather than as "not filmed yet". */}
+      {playable && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <PlayBadge />
+        </div>
+      )}
+      <span className="absolute right-2 bottom-2 rounded-md bg-ink/60 px-1.75 py-0.75 font-mono text-[9.5px] text-cream">
+        {playable ? formatLessonDuration(lesson.durationSeconds) : "Soon"}
+      </span>
+      {lesson.done && (
+        <span className="absolute top-2 left-2 rounded-md bg-success px-1.75 py-0.75 font-mono text-[8.5px] tracking-[0.06em] text-cream">
+          DONE
+        </span>
+      )}
+    </>
+  );
+
+  const artClass =
+    "relative aspect-video overflow-hidden rounded-xl border border-ink/10 bg-[repeating-linear-gradient(135deg,#e6e6da_0_12px,#eeeee4_12px_24px)] bg-cover bg-center";
+  const artStyle = lesson.thumbnailUrl
+    ? { backgroundImage: `url(${lesson.thumbnailUrl})` }
+    : undefined;
+
   return (
     <div className="w-[200px] flex-none snap-start md:w-[248px] md:snap-align-none">
-      <div
-        className="relative aspect-video overflow-hidden rounded-xl border border-ink/10 bg-[repeating-linear-gradient(135deg,#e6e6da_0_12px,#eeeee4_12px_24px)] bg-cover bg-center"
-        style={lesson.thumbnailUrl ? { backgroundImage: `url(${lesson.thumbnailUrl})` } : undefined}
-      >
-        {!lesson.thumbnailUrl && <PlaceholderMark tone="dark" />}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="flex h-9.5 w-9.5 items-center justify-center rounded-full bg-green/92 md:h-11 md:w-11">
-            <svg width="12" height="14" viewBox="0 0 14 16" className="md:h-4 md:w-3.5">
-              <path d="M1 1l12 7-12 7z" fill="#f1f1e7" />
-            </svg>
-          </span>
+      {playable ? (
+        <button
+          type="button"
+          onClick={onOpen}
+          aria-label={`Play lesson: ${lesson.title}`}
+          className={`${artClass} w-full cursor-pointer text-left transition-transform duration-300 ease-out md:hover:-translate-y-0.5`}
+          style={artStyle}
+        >
+          {art}
+        </button>
+      ) : (
+        <div className={artClass} style={artStyle} aria-label={`${lesson.title} — coming soon`}>
+          {art}
         </div>
-        <span className="absolute right-2 bottom-2 rounded-md bg-ink/60 px-1.75 py-0.75 font-mono text-[9.5px] text-cream">
-          {formatLessonDuration(lesson.durationSeconds)}
-        </span>
-        {lesson.done && (
-          <span className="absolute top-2 left-2 rounded-md bg-success px-1.75 py-0.75 font-mono text-[8.5px] tracking-[0.06em] text-cream">
-            DONE
-          </span>
-        )}
-      </div>
+      )}
       <div className="mt-2.5 flex items-baseline gap-1.75 md:mt-3">
         <span className="font-mono text-[10px] text-ink/40">{lesson.no}</span>
-        <span className="text-sm leading-[1.3] font-semibold">{lesson.title}</span>
+        <span className={`text-sm leading-[1.3] font-semibold ${playable ? "" : "text-ink/45"}`}>
+          {lesson.title}
+        </span>
       </div>
     </div>
   );
