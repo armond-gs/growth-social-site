@@ -9,9 +9,10 @@
 
 -- ---------------------------------------------------------------------------
 -- Module 00 — Limitless
--- Adds L04/L05 and backfills the video for each finished lesson. L04
--- "Organization" has no video yet: video_uid stays null so the card keeps the
--- placeholder art and shows "--:--" until it's filmed.
+-- Backfills the video for each lesson. "Organization" originally sat here as
+-- L04 without a video; it moved out to its own module, so this file no longer
+-- creates it and 0005 removes the row this one already inserted. Both files
+-- describe the same end state, so replaying them in order is safe.
 -- ---------------------------------------------------------------------------
 insert into lessons (module_id, no, title, video_uid, duration_seconds, sort_order)
 select m.id, v.no, v.title, v.video_uid, v.duration_seconds, v.sort_order
@@ -20,8 +21,7 @@ cross join (values
   ('L01', 'Understanding Limitless', '474b92dd47c3dfc9a2e67f1c245c0c08'::text, 312::int, 0),
   ('L02', 'Lifestyle',               '7641c7735ac2029fb0e8d5fd063f6465'::text, 150::int, 1),
   ('L03', 'Friends',                 'f46e7ad19237fb5dc16ca1d8c748105e'::text, 143::int, 2),
-  ('L04', 'Organization',            null::text,                               null::int, 3),
-  ('L05', 'Actually Starting',       'fac28b4db85b38fe051fe2b2e25d2e29'::text, 272::int, 4)
+  ('L04', 'Actually Starting',       'fac28b4db85b38fe051fe2b2e25d2e29'::text, 272::int, 3)
 ) as v(no, title, video_uid, duration_seconds, sort_order)
 where m.no = '00'
 on conflict (module_id, no) do update

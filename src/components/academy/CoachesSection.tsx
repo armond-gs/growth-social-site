@@ -13,7 +13,7 @@ export function CoachesSection({ coaches }: { coaches: CoachRow[] }) {
   return (
     <div className="mb-9 md:mb-14">
       <h2 className="m-0 mb-3.5 text-xl font-bold tracking-[-0.02em] md:mb-5 md:text-[22px]">
-        Meet your coaches
+        Meet the team
       </h2>
 
       {/* Mobile: horizontal scroll-snap row */}
