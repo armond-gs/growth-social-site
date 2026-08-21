@@ -10,8 +10,10 @@ export function CurriculumModule({
 }) {
   return (
     <div>
+      {/* The number isn't rendered separately any more: every title now carries
+          its own ("Module 1"…"Module 8"), so showing `no` alongside gave
+          "01 Module 1". `no` is still the key migrations join on. */}
       <div className="mb-3.5 flex items-baseline gap-2.5 md:gap-3.5">
-        <span className="font-mono text-xs text-ink/40">{mod.no}</span>
         <h3 className="m-0 text-xl font-bold tracking-[-0.02em] md:text-[clamp(20px,2.2vw,26px)]">
           {mod.title}
         </h3>
