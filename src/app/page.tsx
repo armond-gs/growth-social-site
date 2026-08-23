@@ -3,7 +3,6 @@ import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/landing/Hero";
 import { BrandsSection } from "@/components/landing/BrandsSection";
-import { StatsSection } from "@/components/landing/StatsSection";
 import { ServicesSection } from "@/components/landing/ServicesSection";
 import { StatementBand } from "@/components/landing/StatementBand";
 import { ApproachSection } from "@/components/landing/ApproachSection";
@@ -17,7 +16,9 @@ export default function Home() {
       <Nav />
       <Hero />
       <BrandsSection />
-      <StatsSection />
+      {/* Stats ("The receipts") pulled from both modes. To restore: re-add
+          <StatsSection /> here and the "Results" #results link to NAV_LINKS
+          and FOOTER_LINKS. */}
       <ServicesSection />
       <StatementBand />
       <ApproachSection />

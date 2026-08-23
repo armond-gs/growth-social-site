@@ -57,6 +57,9 @@ body {
   --band-muted: rgba(241, 241, 231, 0.68);
   --band-subtle: rgba(241, 241, 231, 0.5);
   --band-rule: rgba(241, 241, 231, 0.16);
+  --band-rule-strong: rgba(241, 241, 231, 0.3);
+  --band-faint: rgba(241, 241, 231, 0.34);
+  --band-hover: rgba(241, 241, 231, 0.06);
   --band-glow: rgba(241, 241, 231, 0.09);
   --band-btn-bg: #f1f1e7;
   --band-btn-fg: #111110;
@@ -92,6 +95,9 @@ body {
   --band-muted: rgba(17, 17, 16, 0.66);
   --band-subtle: rgba(17, 17, 16, 0.46);
   --band-rule: rgba(17, 17, 16, 0.14);
+  --band-rule-strong: rgba(17, 17, 16, 0.26);
+  --band-faint: rgba(17, 17, 16, 0.34);
+  --band-hover: rgba(20, 56, 40, 0.06);
   --band-glow: rgba(17, 17, 16, 0.05);
   --band-btn-bg: #143828;
   --band-btn-fg: #f1f1e7;
