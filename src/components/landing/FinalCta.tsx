@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { CONTAINER } from "@/lib/layout";
 import { Reveal } from "@/components/ui/Reveal";
 import { BookCallButton, BookingReveal } from "@/components/booking/BookingReveal";
@@ -57,7 +56,7 @@ export function FinalCta() {
           {/* Brand books a call inline; creator applies. */}
           {copy.heroCtaOpensBooking ? (
             <BookCallButton className={CTA_CLASS}>
-              {copy.heroCta} <span className="font-mono">→</span>
+              {copy.heroCta} <span className="font-mono">↓</span>
             </BookCallButton>
           ) : (
             <a
@@ -69,13 +68,6 @@ export function FinalCta() {
               {copy.heroCta} <span className="font-mono">→</span>
             </a>
           )}
-          <Link
-            href="mailto:contact@growthsocialhq.com"
-            className="border-b pb-[3px] font-mono text-sm no-underline"
-            style={{ borderColor: "var(--band-rule)", color: "var(--band-muted)" }}
-          >
-            contact@growthsocialhq.com
-          </Link>
         </Reveal>
 
         {/* Brand only. Creators apply rather than book a call, so the panel

@@ -63,6 +63,13 @@ export function Footer() {
         </div>
         <div className="mt-6 flex flex-wrap justify-between gap-4 font-mono text-xs text-[var(--fg-faint)]">
           <span>© 2026 Growth Social — UGC, done differently.</span>
+          <a
+            href="mailto:contact@growthsocialhq.com"
+            className="border-b pb-[2px] no-underline"
+            style={{ borderColor: "var(--rule)", color: "var(--fg-muted)" }}
+          >
+            contact@growthsocialhq.com
+          </a>
           <span>Creators first. Outcomes always.</span>
         </div>
       </div>
