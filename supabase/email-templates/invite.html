@@ -1,0 +1,125 @@
+<!--
+  Creator Academy invite email.
+
+  Paste into Supabase → Authentication → Email Templates → "Invite user".
+  Kept in the repo because Supabase stores templates only in its dashboard,
+  where they're unversioned and easy to lose.
+
+  Email HTML is not web HTML: Outlook renders through Word, Gmail strips
+  <style> blocks and anything modern. Hence tables for layout, inline styles
+  throughout, no flexbox/grid/custom properties, and web-safe font stacks —
+  Archivo and Newsreader won't load, so the fallbacks are what most people
+  actually see.
+
+  The link goes through our own /auth/confirm route rather than Supabase's
+  hosted page, so the session is established on our domain and the creator
+  lands straight on the set-password screen.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>You're in — Growth Social Creator Academy</title>
+  </head>
+  <body style="margin:0; padding:0; background-color:#f1f1e7;">
+    <!-- Inbox preview line. Hidden in the body itself; the spacer stops the
+         client pulling body copy in after it. -->
+    <div style="display:none; max-height:0; overflow:hidden; opacity:0; color:transparent; height:0; width:0;">
+      Your Creator Academy access is ready — set a password and start Module 1.
+      &#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;
+    </div>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f1f1e7;">
+      <tr>
+        <td align="center" style="padding:40px 20px;">
+
+          <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px;">
+
+            <!-- Banner. Served at 1200px and displayed at 600 so it stays
+                 sharp on retina; width/height are set explicitly because
+                 Outlook ignores CSS sizing on images. -->
+            <tr>
+              <td style="padding:0; line-height:0; font-size:0;">
+                <img
+                  src="https://www.growthsocialhq.com/email-banner.jpg"
+                  width="600"
+                  height="240"
+                  alt="Growth Social"
+                  style="display:block; width:100%; max-width:600px; height:auto; border:0; border-radius:16px 16px 0 0;"
+                />
+              </td>
+            </tr>
+
+            <!-- Card. Square top corners so it meets the banner cleanly. -->
+            <tr>
+              <td style="background-color:#fbfbf5; border:1px solid rgba(17,17,16,0.10); border-top:0; border-radius:0 0 16px 16px; padding:36px 36px 40px 36px;">
+
+                <p style="margin:0 0 14px 0; font-family:'Courier New',Courier,monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:rgba(17,17,16,0.45);">
+                  Creator Academy
+                </p>
+
+                <h1 style="margin:0 0 16px 0; font-family:Helvetica,Arial,sans-serif; font-size:30px; line-height:1.15; font-weight:bold; letter-spacing:-0.8px; color:#111110;">
+                  You&rsquo;re in.
+                </h1>
+
+                <p style="margin:0 0 12px 0; font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6; color:rgba(17,17,16,0.70);">
+                  Your access to the Growth Social Creator Academy is ready. Set a
+                  password and you&rsquo;ll go straight to your library — every module,
+                  every lesson, plus intros from the team.
+                </p>
+
+                <p style="margin:0 0 30px 0; font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6; color:rgba(17,17,16,0.70);">
+                  It takes about a minute.
+                </p>
+
+                <!-- Bulletproof button: a styled <a> alone collapses in Outlook,
+                     so the padding lives on the table cell. -->
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td align="center" bgcolor="#143828" style="border-radius:999px;">
+                      <a
+                        href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=invite&next=/academy/update-password"
+                        target="_blank"
+                        style="display:inline-block; padding:16px 34px; font-family:Helvetica,Arial,sans-serif; font-size:16px; font-weight:bold; color:#f1f1e7; text-decoration:none; border-radius:999px;"
+                      >
+                        Set your password &rarr;
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin:30px 0 0 0; font-family:Helvetica,Arial,sans-serif; font-size:13px; line-height:1.6; color:rgba(17,17,16,0.45);">
+                  This link is single-use and expires in 24 hours. If it&rsquo;s
+                  expired, ask us for a new invite and we&rsquo;ll send one over.
+                </p>
+
+                <!-- Some clients strip or mangle the button; the raw URL is the
+                     fallback that always works. -->
+                <p style="margin:18px 0 0 0; font-family:Helvetica,Arial,sans-serif; font-size:12px; line-height:1.6; color:rgba(17,17,16,0.40); word-break:break-all;">
+                  Button not working? Paste this into your browser:<br />
+                  <span style="color:rgba(17,17,16,0.55);">{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=invite&amp;next=/academy/update-password</span>
+                </p>
+
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td style="padding:28px 8px 0 8px;">
+                <p style="margin:0 0 6px 0; font-family:'Courier New',Courier,monospace; font-size:12px; line-height:1.6; color:rgba(17,17,16,0.42);">
+                  Growth Social &mdash; UGC, done differently.
+                </p>
+                <p style="margin:0; font-family:'Courier New',Courier,monospace; font-size:12px; line-height:1.6; color:rgba(17,17,16,0.42);">
+                  Questions? <a href="mailto:contact@growthsocialhq.com" style="color:#143828; text-decoration:underline;">contact@growthsocialhq.com</a>
+                </p>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
