@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { isValidSlot, type DayOption } from "@/lib/booking/slots";
 import { BUDGET_RANGES, SLOT_DURATION_MINUTES } from "@/lib/booking/config";
 import { getAvailability } from "@/lib/supabase/booking-queries";
+import { notifyBooking } from "@/lib/booking/notify";
 
 /**
  * Availability for the booking UI, fetched at open time rather than baked in
@@ -91,6 +92,11 @@ export async function createBooking(request: BookingRequest): Promise<BookingRes
     }
     return { ok: false, error: "Something went wrong booking that call. Please try again." };
   }
+
+  // After the row is safely written, never before — and awaited so the
+  // serverless invocation isn't torn down mid-send. notifyBooking swallows its
+  // own failures, so a notification problem can't fail a real booking.
+  await notifyBooking(request);
 
   return { ok: true, startsAt: request.startsAt };
 }

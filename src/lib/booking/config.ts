@@ -28,7 +28,7 @@ export const SLOT_DURATION_MINUTES = 30;
 export const MINIMUM_NOTICE_HOURS = 12;
 
 /** How far ahead the calendar lets people book. */
-export const BOOKING_WINDOW_DAYS = 30;
+export const BOOKING_WINDOW_DAYS = 14;
 
 export const BUDGET_RANGES = [
   "Under $2k / month",
