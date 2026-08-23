@@ -1,4 +1,4 @@
--- Real lessons for Modules 2–6, from the uploaded Cloudflare files.
+-- Real lessons for Modules 1–6, from the uploaded Cloudflare files.
 --
 -- The placeholder lessons seeded in 0001 came from the original handoff and
 -- don't correspond to what was actually filmed — "Lighting"/"Audio" were
@@ -7,9 +7,6 @@
 --
 -- Titles are Title Cased from the filenames ("background" -> "Background",
 -- "Warm up" -> "Warm Up") to match the lessons already in the curriculum.
---
--- Module 1 is intentionally left empty: its video hadn't been uploaded when
--- this was written. Add it in a later migration.
 --
 -- Safe to re-run. The delete is scoped to modules 1–6 AND to lessons with no
 -- video, so it can only ever remove a placeholder — replaying it after the
@@ -20,6 +17,18 @@
 delete from lessons
 where video_uid is null
   and module_id in (select id from modules where no in ('01','02','03','04','05','06'));
+
+-- Module 1
+insert into lessons (module_id, no, title, video_uid, duration_seconds, sort_order)
+select m.id, v.no, v.title, v.video_uid, v.duration_seconds, v.sort_order
+from modules m
+cross join (values
+  ('L01', 'UGC Fundamentals', '5c68fb155ebe7690b7f3630eb5a88081'::text, 48::int, 0)
+) as v(no, title, video_uid, duration_seconds, sort_order)
+where m.no = '01'
+on conflict (module_id, no) do update
+  set title = excluded.title, video_uid = excluded.video_uid,
+      duration_seconds = excluded.duration_seconds, sort_order = excluded.sort_order;
 
 -- Module 2
 insert into lessons (module_id, no, title, video_uid, duration_seconds, sort_order)
