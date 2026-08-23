@@ -11,16 +11,19 @@ import { CoachesSection } from "@/components/academy/CoachesSection";
 import { CurriculumModule } from "@/components/academy/CurriculumModule";
 import { StreamLightbox } from "@/components/ui/StreamLightbox";
 import { markLessonComplete } from "@/lib/supabase/academy-actions";
+import { DisplayNameEditor } from "@/components/academy/DisplayNameEditor";
 import { createClient } from "@/lib/supabase/client";
 
 export function AcademyLibrary({
   creatorEmail,
+  displayName: storedName,
   modules,
   continueWatching,
   progressPercent,
   coaches,
 }: {
   creatorEmail: string;
+  displayName: string | null;
   modules: ModuleRow[];
   continueWatching: ContinueWatching | null;
   progressPercent: number;
@@ -35,9 +38,9 @@ export function AcademyLibrary({
     () => modules.flatMap((m) => m.lessons).find((l) => l.id === openLessonId) ?? null,
     [modules, openLessonId],
   );
-  // No profiles table yet, so the display name is just derived from the
-  // email — swap for a real display name once creator profiles exist.
-  const displayName = creatorEmail.split("@")[0] || "creator";
+  // Their own name once they've set one; otherwise the email's local part,
+  // which is better than showing the full address.
+  const displayName = storedName || creatorEmail.split("@")[0] || "creator";
   const lessonCount = modules.reduce((sum, m) => sum + m.lessons.length, 0);
 
   const handleLogout = async () => {
@@ -65,7 +68,7 @@ export function AcademyLibrary({
           </button>
           <div className="order-2 flex items-center gap-2.5 md:order-1">
             <AvatarPlaceholder size={32} name={displayName} />
-            <span className="hidden text-sm font-semibold md:inline">{displayName}</span>
+            <DisplayNameEditor displayName={displayName} hasCustomName={Boolean(storedName)} />
           </div>
         </div>
       </div>

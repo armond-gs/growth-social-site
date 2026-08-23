@@ -30,6 +30,11 @@ export default async function AcademyPage() {
     <div className="min-h-screen bg-cream">
       <AcademyLibrary
         creatorEmail={user.email ?? ""}
+        // Stored on the auth user rather than in a profiles table — it's one
+        // string the creator owns, so it doesn't need its own table or RLS.
+        displayName={
+          (user.user_metadata?.display_name as string | undefined)?.trim() || null
+        }
         modules={modules}
         continueWatching={continueWatching}
         progressPercent={progressPercent}

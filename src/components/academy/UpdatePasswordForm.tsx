@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 
 export function UpdatePasswordForm() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +27,13 @@ export function UpdatePasswordForm() {
 
     setLoading(true);
     const supabase = createClient();
-    const { error: updateError } = await supabase.auth.updateUser({ password });
+    // Name and password in one call — this is the only moment an invited
+    // creator is guaranteed to be here, so asking twice would lose most of them.
+    const trimmed = name.trim();
+    const { error: updateError } = await supabase.auth.updateUser({
+      password,
+      ...(trimmed ? { data: { display_name: trimmed } } : {}),
+    });
 
     if (updateError) {
       setError(updateError.message);
@@ -45,12 +52,25 @@ export function UpdatePasswordForm() {
           Creator Academy
         </span>
         <h2 className="mt-3 mb-6.5 text-[30px] font-bold tracking-[-0.025em]">
-          Set a new password.
+          Set up your account.
         </h2>
 
         {error && (
           <p className="mb-4 rounded-lg bg-red-50 px-3.5 py-2.5 text-sm text-red-700">{error}</p>
         )}
+
+        <label htmlFor="name" className="mb-1.75 block text-[13px] font-semibold text-ink/70">
+          Your name
+        </label>
+        <input
+          id="name"
+          type="text"
+          autoComplete="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="How should we greet you?"
+          className="mb-4 w-full rounded-xl border border-ink/18 bg-cream-card px-4 py-3.5 text-[15px] text-ink outline-none"
+        />
 
         <label htmlFor="password" className="mb-1.75 block text-[13px] font-semibold text-ink/70">
           New password

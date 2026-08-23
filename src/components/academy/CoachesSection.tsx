@@ -24,7 +24,10 @@ export function CoachesSection({ coaches }: { coaches: CoachRow[] }) {
       </div>
 
       {/* Desktop: 2-up grid */}
-      <div className="hidden md:grid md:grid-cols-2 md:gap-[clamp(16px,2.4vw,24px)]">
+      {/* Four across on desktop rather than two. The 2-up grid dated from when
+          there were only two coaches; with four people it stretched each card
+          to ~600px, dwarfing the 248px lesson cards below. */}
+      <div className="hidden md:grid md:grid-cols-3 md:gap-[clamp(16px,2.4vw,24px)] lg:grid-cols-4">
         {coaches.map((coach) => (
           <CoachCard key={coach.id} coach={coach} onOpen={() => setOpenCoachId(coach.id)} />
         ))}
