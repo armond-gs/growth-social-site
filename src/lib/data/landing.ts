@@ -1,8 +1,8 @@
-// "Clients" (#voices) is omitted while the testimonials section is hidden —
-// it would scroll to nothing. Restore it alongside the section.
+// "Clients" (#voices) and "Results" (#results) are omitted while those
+// sections are hidden — they would scroll to nothing. Restore each link
+// alongside its section.
 export const NAV_LINKS = [
   { href: "#services", label: "Services" },
-  { href: "#results", label: "Results" },
   { href: "#approach", label: "Approach" },
 ];
 
@@ -125,7 +125,6 @@ export const TESTIMONIALS = [
 
 export const FOOTER_LINKS = [
   { href: "#services", label: "Services" },
-  { href: "#results", label: "Results" },
   { href: "#approach", label: "Approach" },
   { href: "#book", label: "Book a call" },
 ];

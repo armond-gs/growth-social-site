@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { ModuleRow, ContinueWatching, CoachRow } from "@/lib/academy/types";
 import { AvatarPlaceholder } from "@/components/ui/AvatarPlaceholder";
 import { ContinueWatchingCard } from "@/components/academy/ContinueWatchingCard";
 import { CoachesSection } from "@/components/academy/CoachesSection";
 import { CurriculumModule } from "@/components/academy/CurriculumModule";
+import { StreamLightbox } from "@/components/ui/StreamLightbox";
+import { markLessonComplete } from "@/lib/supabase/academy-actions";
 import { createClient } from "@/lib/supabase/client";
 
 export function AcademyLibrary({
@@ -24,6 +27,14 @@ export function AcademyLibrary({
   coaches: CoachRow[];
 }) {
   const router = useRouter();
+
+  // One lightbox for the whole curriculum rather than one per module — the
+  // player is a singleton, so only the open lesson's id needs tracking.
+  const [openLessonId, setOpenLessonId] = useState<string | null>(null);
+  const openLesson = useMemo(
+    () => modules.flatMap((m) => m.lessons).find((l) => l.id === openLessonId) ?? null,
+    [modules, openLessonId],
+  );
   // No profiles table yet, so the display name is just derived from the
   // email — swap for a real display name once creator profiles exist.
   const displayName = creatorEmail.split("@")[0] || "creator";
@@ -72,7 +83,12 @@ export function AcademyLibrary({
           </div>
         </div>
 
-        {continueWatching && <ContinueWatchingCard data={continueWatching} />}
+        {continueWatching && (
+          <ContinueWatchingCard
+            data={continueWatching}
+            onOpen={() => setOpenLessonId(continueWatching.lessonId)}
+          />
+        )}
 
         <CoachesSection coaches={coaches} />
 
@@ -87,10 +103,18 @@ export function AcademyLibrary({
 
         <div className="flex flex-col gap-8.5 md:mt-4 md:gap-11">
           {modules.map((mod) => (
-            <CurriculumModule key={mod.id} mod={mod} />
+            <CurriculumModule key={mod.id} mod={mod} onOpenLesson={setOpenLessonId} />
           ))}
         </div>
       </div>
+
+      {/* Completion is written on the player's real "ended" event, not on
+          click — opening a lesson isn't the same as watching it. */}
+      <StreamLightbox
+        videoUid={openLesson?.videoUid ?? null}
+        onClose={() => setOpenLessonId(null)}
+        onEnded={openLesson ? () => markLessonComplete(openLesson.id) : undefined}
+      />
     </div>
   );
 }

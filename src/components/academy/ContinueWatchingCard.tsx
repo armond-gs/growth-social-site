@@ -1,10 +1,16 @@
-import Link from "next/link";
 import type { ContinueWatching } from "@/lib/academy/types";
 import { formatLessonDuration } from "@/lib/academy/types";
 import { PlaceholderMark } from "@/components/academy/PlaceholderMark";
 
-export function ContinueWatchingCard({ data }: { data: ContinueWatching }) {
-  const { moduleLabel, lessonTitle, progressPercent, durationSeconds, thumbnailUrl, isStart } = data;
+export function ContinueWatchingCard({
+  data,
+  onOpen,
+}: {
+  data: ContinueWatching;
+  onOpen?: () => void;
+}) {
+  const { moduleLabel, lessonTitle, progressPercent, durationSeconds, thumbnailUrl, isStart, videoUid } = data;
+  const playable = Boolean(videoUid);
 
   return (
     <div className="mb-14 flex flex-col gap-5 rounded-[20px] bg-green p-3.5 text-cream md:mb-14 md:grid md:grid-cols-[1.4fr_1fr] md:items-center md:gap-[clamp(20px,3vw,40px)] md:p-[clamp(20px,2.5vw,32px)]">
@@ -40,12 +46,17 @@ export function ContinueWatchingCard({ data }: { data: ContinueWatching }) {
         <div className="mb-4.5 font-mono text-[10.5px] text-cream/55 md:mb-5.5 md:text-[11px]">
           {isStart ? "Not started yet" : `${progressPercent}% complete`}
         </div>
-        <Link
-          href="#"
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-cream px-6 py-3.5 font-semibold text-ink no-underline md:w-auto md:px-6 md:py-[13px] md:text-[15px]"
+        {/* Disabled rather than hidden when the suggested lesson has no video
+            yet — the card still tells you what's next, it just can't play it. */}
+        <button
+          type="button"
+          onClick={onOpen}
+          disabled={!playable}
+          className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-cream px-6 py-3.5 font-semibold text-ink no-underline transition-transform duration-300 ease-out disabled:cursor-not-allowed disabled:opacity-55 md:w-auto md:px-6 md:py-[13px] md:text-[15px] md:enabled:hover:-translate-y-0.5"
         >
-          {isStart ? "Start" : "Resume"} <span className="font-mono">→</span>
-        </Link>
+          {playable ? (isStart ? "Start" : "Resume") : "Coming soon"}
+          {playable && <span className="font-mono">→</span>}
+        </button>
       </div>
     </div>
   );
