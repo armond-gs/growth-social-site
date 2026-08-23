@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { APPLY_URL } from "@/lib/site";
 
 export function LoginScreen() {
   const router = useRouter();
@@ -125,9 +126,15 @@ export function LoginScreen() {
 
           <p className="mt-5.5 text-center text-sm text-ink/60 md:mt-6">
             New creator?{" "}
-            <Link href="/#book" className="font-semibold text-ink no-underline border-b border-ink/30">
+            {/* Creators apply; they don't book a sales call. */}
+            <a
+              href={APPLY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-b border-ink/30 font-semibold text-ink no-underline"
+            >
               Request access
-            </Link>
+            </a>
           </p>
         </form>
       </div>

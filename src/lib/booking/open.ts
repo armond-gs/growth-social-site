@@ -7,7 +7,7 @@
  * button can ask, and the single <BookingReveal /> answers.
  *
  * The `#book` hash is kept in sync so `/#book` still works as a deep link
- * from elsewhere (the Academy's "Request access", the footer, shared URLs).
+ * from elsewhere (the footer, shared URLs).
  */
 
 export const BOOKING_ANCHOR = "book";

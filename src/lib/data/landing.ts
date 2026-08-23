@@ -1,3 +1,5 @@
+import { APPLY_URL } from "@/lib/site";
+
 // "Clients" (#voices) and "Results" (#results) are omitted while those
 // sections are hidden — they would scroll to nothing. Restore each link
 // alongside its section.
@@ -267,7 +269,7 @@ export const LANDING_COPY: Record<AudienceMode, LandingCopy> = {
     heroBody:
       "Flat rates per approved video, briefs from real brands, and a full Academy behind you. We treat creators like a roster, not a headcount — coached, paid properly and booked again.",
     heroCta: "Apply to create",
-    heroCtaHref: "https://apply.growthsocialhq.com",
+    heroCtaHref: APPLY_URL,
     heroCtaOpensBooking: false,
     heroAlt: "Log into the portal",
     heroAltHref: "/academy",
